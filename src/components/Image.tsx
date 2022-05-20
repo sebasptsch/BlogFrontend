@@ -1,6 +1,7 @@
 import { Box, ButtonGroup, IconButton, Image } from "@chakra-ui/react";
 import { BsPersonSquare } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
+import { useSWRConfig } from "swr";
 import { api } from "../utils";
 export default function ImageComponent(props: {
   image: {
@@ -10,13 +11,21 @@ export default function ImageComponent(props: {
   };
   boxSize?: string;
 }) {
+  const { mutate } = useSWRConfig();
   // const { isError, isLoading, image} = useImage(props.id)
-  const deleteImg = () => api.delete(`/images/${props.image.id}`);
+  const deleteImg = () => {
+    api.delete(`/images/${props.image.id}`).then(() => mutate("/images"));
+  };
   // console.log(props.image);
   const setAsAvatar = () =>
-    api.patch("/users", {
-      avatarId: props.image.id,
-    });
+    api
+      .patch("/users", {
+        avatarId: props.image.id,
+      })
+      .then(() => {
+        mutate("/images");
+        mutate("/users/me");
+      });
   return (
     <Box
       // as="a"

@@ -17,6 +17,7 @@ import {
 import { ReactNode, useRef } from "react";
 import { useAlert } from "react-alert";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
+import { useSWRConfig } from "swr";
 import { api } from "../utils";
 
 type FileUploadProps = {
@@ -66,6 +67,7 @@ export default function ImageUploadModal() {
     formState: { errors },
   } = useForm<FormValues>();
   const alert = useAlert();
+  const { mutate } = useSWRConfig();
 
   //   const onSubmit = handleSubmit((data) => console.log("On Submit: ", data));
 
@@ -89,6 +91,7 @@ export default function ImageUploadModal() {
           alert.success(
             `Success, image uploaded with an id of ${response.data.id}`
           );
+          mutate("/images");
           resolve(response);
         })
         .catch((error) => {

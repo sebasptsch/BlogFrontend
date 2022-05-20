@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { ReactNode, useRef } from "react";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
+import { useSWRConfig } from "swr";
 import { api } from "../../utils";
 
 type FileUploadProps = {
@@ -54,6 +55,7 @@ export default function Upload() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
+  const { mutate } = useSWRConfig();
 
   //   const onSubmit = handleSubmit((data) => console.log("On Submit: ", data));
 
@@ -74,6 +76,7 @@ export default function Upload() {
         )
         .then((response) => {
           // console.log(response);
+          mutate("/images");
           resolve(response);
         })
         .catch((error) => {

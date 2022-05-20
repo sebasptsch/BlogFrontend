@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   ButtonGroup,
   Container,
@@ -36,7 +37,21 @@ export default function Nav() {
               >
                 Logout
               </Button>
-              <Button as={Link} to="/users/me">
+              <Button
+                as={Link}
+                to="/users/me"
+                leftIcon={
+                  <Avatar
+                    size="sm"
+                    name={user.name}
+                    src={
+                      user?.avatar?.id
+                        ? `/api/images/${user.avatar.id}`
+                        : undefined
+                    }
+                  />
+                }
+              >
                 Profile
               </Button>
             </>
