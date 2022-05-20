@@ -39,7 +39,7 @@ export default function Register() {
           resolve(result.data.access_token);
         })
         .catch((result) => {
-          console.log(result);
+          // console.log(result);
           alert.error("There was a problem logging in.");
           reject(result.message);
         });

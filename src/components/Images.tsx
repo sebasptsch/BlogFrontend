@@ -9,8 +9,8 @@ export default function Images() {
       <Box maxW="md" borderWidth="1px" borderRadius="lg" p={5}>
         <Grid templateColumns="repeat(2, 1fr)" gap={6}>
           {images?.map((image) => (
-            <GridItem w="100%">
-              <ImageComponent image={image} key={image.id} />
+            <GridItem w="100%" key={image.id}>
+              <ImageComponent image={image} />
             </GridItem>
           ))}
         </Grid>

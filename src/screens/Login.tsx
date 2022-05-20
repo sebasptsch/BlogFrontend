@@ -34,10 +34,10 @@ export default function Login() {
           alert.success("Successfully logged in!");
 
           navigate("/users/me");
-          resolve(result.data.access_token);
+          // resolve(result.data.access_token);
         })
         .catch((result) => {
-          console.log(result);
+          // console.log(result);
           alert.error("There was a problem logging in.");
           reject(result.message);
         });

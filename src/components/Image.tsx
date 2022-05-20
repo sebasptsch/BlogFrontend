@@ -15,7 +15,7 @@ export default function ImageComponent(props: {
     axios.delete(`http://localhost:3000/images/${props.image.id}`, {
       withCredentials: true,
     });
-  console.log(props.image);
+  // console.log(props.image);
   const setAsAvatar = () =>
     axios.patch(
       "http://localhost:3000/users",

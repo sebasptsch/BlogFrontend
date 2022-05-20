@@ -72,7 +72,7 @@ export default function ImageUploadModal() {
   const onSubmit = (data: any) =>
     new Promise((resolve, reject) => {
       const file = data.file_[0];
-      console.log(data);
+      // console.log(data);
       axios
         .post(
           "http://localhost:3000/images",
