@@ -6,12 +6,13 @@ import {
   Heading,
   Input,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import { GoogleReCaptcha } from "react-google-recaptcha-v3";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useSWRConfig } from "swr";
+import { api } from "../../utils";
 
 export default function Login() {
   const {
@@ -22,17 +23,14 @@ export default function Login() {
   } = useForm({});
   const navigate = useNavigate();
   const alert = useAlert();
+  const { mutate } = useSWRConfig();
   const onSubmit = (values: any) =>
     new Promise((resolve, reject) => {
-      axios
-        .post<{ access_token: string }>(
-          "http://localhost:3000/auth/signin",
-          values,
-          { withCredentials: true }
-        )
+      api
+        .post("/auth/signin", values)
         .then((result) => {
           alert.success("Successfully logged in!");
-
+          // mutate("/users/me");
           navigate("/users/me");
           // resolve(result.data.access_token);
         })

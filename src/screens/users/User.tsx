@@ -1,15 +1,13 @@
-import { Button, Code, Container, Spinner } from "@chakra-ui/react";
-import axios from "axios";
+import { Container, Spinner } from "@chakra-ui/react";
 import moment from "moment";
-import Images from "../components/Images";
-import ImageUploadModal from "../components/ImageUploadModal";
-import useMe from "../hooks/me.hook";
+import Images from "../../components/Images";
+import ImageUploadModal from "../../components/ImageUploadModal";
+import useMe from "../../hooks/me.hook";
 
 export default function Me() {
   const { isLoading, isError, user } = useMe();
   return (
     <Container size="md">
-      <Code>{JSON.stringify(user, undefined, 2)}</Code>
       {user ? (
         <>
           <b>Name: </b>
@@ -25,16 +23,7 @@ export default function Me() {
       ) : (
         <Spinner />
       )}
-      <br />
-      <Button
-        onClick={() => {
-          axios.post("http://localhost:3000/auth/logout", undefined, {
-            withCredentials: true,
-          });
-        }}
-      >
-        Logout
-      </Button>
+
       <Images />
     </Container>
   );

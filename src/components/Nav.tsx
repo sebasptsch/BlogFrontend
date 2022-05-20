@@ -6,9 +6,15 @@ import {
   Img,
   Spacer,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSWRConfig } from "swr";
+import useMe from "../hooks/me.hook";
+import { api } from "../utils";
 
 export default function Nav() {
+  const { user, isError, isLoading } = useMe();
+  const navigate = useNavigate();
+  const { mutate } = useSWRConfig();
   return (
     <Container maxW="container.lg">
       <Flex m={3}>
@@ -18,12 +24,32 @@ export default function Nav() {
 
         <Spacer />
         <ButtonGroup spacing={6}>
-          <Button as={Link} to="/auth/login">
-            Sign In
-          </Button>
-          <Button as={Link} to="/auth/register">
-            Sign Up
-          </Button>
+          {user ? (
+            <>
+              <Button
+                onClick={() => {
+                  api.post("/auth/logout", undefined).then(() => {
+                    mutate("/users/me");
+                    navigate("/");
+                  });
+                }}
+              >
+                Logout
+              </Button>
+              <Button as={Link} to="/users/me">
+                Profile
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button as={Link} to="/auth/login">
+                Sign In
+              </Button>
+              <Button as={Link} to="/auth/register">
+                Sign Up
+              </Button>
+            </>
+          )}
         </ButtonGroup>
       </Flex>
     </Container>

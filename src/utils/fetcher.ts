@@ -1,4 +1,3 @@
-import axios from "axios";
+import { api } from "./api";
 
-export const fetcher = (url) =>
-  axios.get(url, { withCredentials: true }).then((res) => res.data);
+export const fetcher = (url) => api.get(url).then((res) => res.data);

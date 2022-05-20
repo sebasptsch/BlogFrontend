@@ -14,10 +14,10 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { ReactNode, useRef } from "react";
 import { useAlert } from "react-alert";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
+import { api } from "../utils";
 
 type FileUploadProps = {
   register: UseFormRegisterReturn;
@@ -73,12 +73,11 @@ export default function ImageUploadModal() {
     new Promise((resolve, reject) => {
       const file = data.file_[0];
       // console.log(data);
-      axios
+      api
         .post(
-          "http://localhost:3000/images",
+          "/images",
           { file },
           {
-            withCredentials: true,
             method: "POST",
             headers: {
               "Content-Type": "multipart/form-data",

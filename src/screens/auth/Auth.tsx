@@ -18,18 +18,10 @@ export default function AuthScreen() {
           <Outlet />
           <Divider my={4} />
           <ButtonGroup>
-            <Button
-              as="a"
-              href="http://localhost:3000/auth/github"
-              leftIcon={<FaGithub />}
-            >
+            <Button as="a" href="/api/auth/github" leftIcon={<FaGithub />}>
               Github
             </Button>
-            <Button
-              as="a"
-              href="http://localhost:3000/auth/discord"
-              leftIcon={<FaDiscord />}
-            >
+            <Button as="a" href="/api/auth/discord" leftIcon={<FaDiscord />}>
               Discord
             </Button>
           </ButtonGroup>

@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { fetcher } from "../utils";
 
 export default function useImages() {
-  const { data, error } = useSWR(`http://localhost:3000/images`, fetcher);
+  const { data, error } = useSWR(`/images`, fetcher);
 
   return {
     images: data,

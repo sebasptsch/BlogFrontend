@@ -1,11 +1,11 @@
 import useSWR from "swr";
 import { fetcher } from "../utils";
 
-export default function useMe() {
-  const { data, error } = useSWR(`/users/me`);
+export default function useMyPosts() {
+  const { data, error } = useSWR(`/posts/me`, fetcher);
 
   return {
-    user: data,
+    posts: data,
     isLoading: !error && !data,
     isError: error,
   };

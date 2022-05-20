@@ -1,7 +1,7 @@
 import { Heading, Skeleton, Stack } from "@chakra-ui/react";
 import useSWR from "swr";
-import PostItem from "../components/Post";
-import { fetcher } from "../utils";
+import PostItem from "../../components/Post";
+import { fetcher } from "../../utils";
 
 export default function Posts() {
   const { error, data } = useSWR<
@@ -16,7 +16,7 @@ export default function Posts() {
       createdAt: string;
       updatedAt: string;
     }[]
-  >("http://localhost:3000/posts", fetcher);
+  >("/posts", fetcher);
   return (
     <>
       <Heading>Posts</Heading>

@@ -1,7 +1,7 @@
 import { Box, ButtonGroup, IconButton, Image } from "@chakra-ui/react";
-import axios from "axios";
 import { BsPersonSquare } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
+import { api } from "../utils";
 export default function ImageComponent(props: {
   image: {
     id: number;
@@ -11,19 +11,12 @@ export default function ImageComponent(props: {
   boxSize?: string;
 }) {
   // const { isError, isLoading, image} = useImage(props.id)
-  const deleteImg = () =>
-    axios.delete(`http://localhost:3000/images/${props.image.id}`, {
-      withCredentials: true,
-    });
+  const deleteImg = () => api.delete(`/images/${props.image.id}`);
   // console.log(props.image);
   const setAsAvatar = () =>
-    axios.patch(
-      "http://localhost:3000/users",
-      {
-        avatarId: props.image.id,
-      },
-      { withCredentials: true }
-    );
+    api.patch("/users", {
+      avatarId: props.image.id,
+    });
   return (
     <Box
       // as="a"
@@ -34,7 +27,7 @@ export default function ImageComponent(props: {
       borderColor={props.image.avatarUserId ? "green.300" : undefined}
     >
       <Image
-        src={`http://localhost:3000/images/${props.image.id}`}
+        src={`http://localhost:3002/api/images/${props.image.id}`}
         // boxSize={props.boxSize ?? "100px"}
         // objectFit={"cover"}
       />

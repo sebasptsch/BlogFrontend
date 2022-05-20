@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import isHotkey from "is-hotkey";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { createEditor, Descendant, Editor, Transforms } from "slate";
 import { withHistory } from "slate-history";
 import {
@@ -65,8 +65,16 @@ const exampleValue = [
   },
 ];
 
-export const RichTextBlock: React.FC<RichTextBlockProps> = ({}) => {
-  const [value, setValue] = useState<Descendant[]>(exampleValue);
+interface Props {
+  value: Descendant[];
+  onChange: (value: Descendant[]) => void;
+}
+
+export const RichTextBlock: React.FC<RichTextBlockProps & Props> = ({
+  onChange,
+  value,
+}: Props) => {
+  // const [value, setValue] = useState<Descendant[]>(exampleValue);
   const renderElement = useCallback(
     (props: RenderElementProps) => <Element {...props} />,
     []
@@ -119,12 +127,13 @@ export const RichTextBlock: React.FC<RichTextBlockProps> = ({}) => {
   };
 
   return (
-    <Box ref={divRef} onMouseDown={focusEditor} borderWidth={"1px"}>
-      <Slate
-        editor={editor}
-        value={value}
-        onChange={(newValue) => setValue(newValue)}
-      >
+    <Box
+      ref={divRef}
+      onMouseDown={focusEditor}
+      borderWidth={"1px"}
+      borderRadius={"7"}
+    >
+      <Slate editor={editor} value={value} onChange={onChange}>
         <Toolbar />
         <Box padding={"15px 5px"}>
           <Editable
