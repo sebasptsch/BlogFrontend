@@ -18,6 +18,7 @@ declare module "slate" {
       code?: boolean;
       italic?: boolean;
       underline?: boolean;
+      kbd: boolean;
     };
   }
 }

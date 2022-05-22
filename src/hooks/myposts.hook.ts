@@ -1,7 +1,7 @@
 import useSWR from "swr";
-import { fetcher } from "../utils";
+import { fetcher } from "@utils";
 
-export default function useMyPosts() {
+export function useMyPosts() {
   const { data, error } = useSWR(`/posts/me`, fetcher);
 
   return {

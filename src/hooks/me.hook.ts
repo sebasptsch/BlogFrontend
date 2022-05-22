@@ -1,7 +1,6 @@
 import useSWR from "swr";
-import { fetcher } from "../utils";
 
-export default function useMe() {
+export function useMe() {
   const { data, error } = useSWR(`/users/me`);
 
   return {

@@ -1,31 +1,17 @@
 import { Heading, Skeleton, Stack } from "@chakra-ui/react";
-import useSWR from "swr";
 import PostItem from "../../components/Post";
-import { fetcher } from "../../utils";
+import { usePosts } from "../../hooks/posts.hook";
 
 export default function Posts() {
-  const { error, data } = useSWR<
-    {
-      id: number;
-      status: "PUBLISHED" | "DRAFT";
-      slug: string;
-      title: string;
-      summary: string;
-      content: object;
-      userId: number;
-      createdAt: string;
-      updatedAt: string;
-    }[]
-  >("/posts", fetcher);
+  const { posts, isLoading, isError } = usePosts();
   return (
     <>
       <Heading>Posts</Heading>
       <Stack>
-        {/* <>{JSON.stringify(data, undefined, 2)}</> */}
-        {data ? (
-          data.map((post) => <PostItem post={post} key={post.id} />)
-        ) : (
+        {isLoading ? (
           <Skeleton />
+        ) : (
+          posts?.map((post) => <PostItem post={post} key={post.id} />)
         )}
       </Stack>
     </>

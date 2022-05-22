@@ -3,8 +3,13 @@ import {
   Heading,
   HStack,
   IconButton,
+  Kbd,
   ListItem,
   OrderedList,
+  Table,
+  Tbody,
+  Td,
+  Tr,
   UnorderedList,
   useColorMode,
 } from "@chakra-ui/react";
@@ -17,6 +22,11 @@ import {
   MdFormatListNumbered,
   MdFormatQuote,
   MdFormatUnderlined,
+  MdKeyboard,
+  MdLooks3,
+  MdLooks4,
+  MdLooks5,
+  MdLooks6,
   MdLooksOne,
   MdLooksTwo,
 } from "react-icons/md";
@@ -156,8 +166,13 @@ export const Toolbar = () => {
       <MarkButton format="italic" icon={<MdFormatItalic />} />
       <MarkButton format="underline" icon={<MdFormatUnderlined />} />
       <MarkButton format="code" icon={<MdCode />} />
+      <MarkButton format="kbd" icon={<MdKeyboard />} />
       <BlockButton format="heading-one" icon={<MdLooksOne />} />
       <BlockButton format="heading-two" icon={<MdLooksTwo />} />
+      <BlockButton format="heading-three" icon={<MdLooks3 />} />
+      <BlockButton format="heading-four" icon={<MdLooks4 />} />
+      <BlockButton format="heading-five" icon={<MdLooks5 />} />
+      <BlockButton format="heading-six" icon={<MdLooks6 />} />
       <BlockButton format="block-quote" icon={<MdFormatQuote />} />
       <BlockButton format="numbered-list" icon={<MdFormatListNumbered />} />
       <BlockButton format="bulleted-list" icon={<MdFormatListBulleted />} />
@@ -180,6 +195,16 @@ export const Element = ({
   };
 }) => {
   switch (element.type) {
+    case "table":
+      return (
+        <Table>
+          <Tbody {...attributes}>{children}</Tbody>
+        </Table>
+      );
+    case "table-row":
+      return <Tr {...attributes}>{children}</Tr>;
+    case "table-cell":
+      return <Td {...attributes}>{children}</Td>;
     case "block-quote":
       return (
         <chakra.blockquote
@@ -206,6 +231,30 @@ export const Element = ({
     case "heading-two":
       return (
         <Heading as="h2" size="2xl" {...attributes}>
+          {children}
+        </Heading>
+      );
+    case "heading-three":
+      return (
+        <Heading as="h3" size="lg" {...attributes}>
+          {children}
+        </Heading>
+      );
+    case "heading-four":
+      return (
+        <Heading as="h4" size="md" {...attributes}>
+          {children}
+        </Heading>
+      );
+    case "heading-five":
+      return (
+        <Heading as="h5" size="sm" {...attributes}>
+          {children}
+        </Heading>
+      );
+    case "heading-six":
+      return (
+        <Heading as="h6" size="xs" {...attributes}>
           {children}
         </Heading>
       );
@@ -239,6 +288,10 @@ export const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
 
   if (leaf.underline) {
     children = <u>{children}</u>;
+  }
+
+  if (leaf.kbd) {
+    children = <Kbd>{children}</Kbd>;
   }
 
   return <span {...attributes}>{children}</span>;

@@ -1,14 +1,14 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import { fetcher, theme } from "@utils";
 import React from "react";
 import { positions, Provider as AlertProvider } from "react-alert";
 import ReactDOM from "react-dom/client";
 import { SWRConfig } from "swr";
 import { ChakraAlert } from "./components/Alert";
 import AppRouter from "./router";
-import { fetcher } from "./utils";
-import theme from "./utils/theme";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <ChakraProvider theme={theme}>
       <AlertProvider
         template={ChakraAlert}

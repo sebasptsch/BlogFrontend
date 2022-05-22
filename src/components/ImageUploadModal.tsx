@@ -14,11 +14,11 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import { api } from "@utils";
 import { ReactNode, useRef } from "react";
 import { useAlert } from "react-alert";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
 import { useSWRConfig } from "swr";
-import { api } from "../utils";
 
 type FileUploadProps = {
   register: UseFormRegisterReturn;

@@ -1,6 +1,12 @@
-import { extendTheme } from "@chakra-ui/react";
+import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
 
-export default extendTheme({
+const config: ThemeConfig = {
+  useSystemColorMode: true,
+  initialColorMode: "dark",
+};
+
+export const theme = extendTheme({
+  config,
   colors: {
     discord: {
       50: "#e8eeff",

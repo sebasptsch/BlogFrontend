@@ -7,9 +7,9 @@ import {
   MenuList,
   MenuProps,
 } from "@chakra-ui/react";
+import { api } from "@utils";
 import { Link } from "react-router-dom";
 import { useSWRConfig } from "swr";
-import { api } from "../utils";
 
 interface Props {
   post: Post;

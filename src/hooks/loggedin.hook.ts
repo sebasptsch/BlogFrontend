@@ -1,11 +1,11 @@
 import useSWR from "swr";
 import { fetcher } from "@utils";
 
-export function useImages() {
-  const { data, error } = useSWR(`/images`, fetcher);
+export function useLoggedIn() {
+  const { data, error } = useSWR(`/auth/loggedIn`, fetcher);
 
   return {
-    images: data,
+    loggedIn: data?.loggedIn,
     isLoading: !error && !data,
     isError: error,
   };

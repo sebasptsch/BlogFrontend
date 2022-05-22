@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import isHotkey from "is-hotkey";
 import React, { useCallback, useMemo } from "react";
-import { createEditor, Descendant, Editor, Transforms } from "slate";
+import { createEditor, Descendant } from "slate";
 import { withHistory } from "slate-history";
 import {
   Editable,
@@ -12,6 +12,8 @@ import {
   withReact,
 } from "slate-react";
 import { Element, Leaf, toggleMark, Toolbar } from "./RichTextComponents";
+import { withShortcuts } from "./withShortcuts";
+import { withTables } from "./withTables";
 
 // @refresh reset
 const HOTKEYS: { [hotkey: string]: string } = {
@@ -74,7 +76,6 @@ export const RichTextBlock: React.FC<RichTextBlockProps & Props> = ({
   onChange,
   value,
 }: Props) => {
-  // const [value, setValue] = useState<Descendant[]>(exampleValue);
   const renderElement = useCallback(
     (props: RenderElementProps) => <Element {...props} />,
     []
@@ -83,26 +84,14 @@ export const RichTextBlock: React.FC<RichTextBlockProps & Props> = ({
     (props: RenderLeafProps) => <Leaf {...props} />,
     []
   );
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  // const [value, setValue] = useState<Descendant[]>(exampleValue);
 
-  //focus selection
-  const [focused, setFocused] = React.useState(false);
+  const editor = useMemo(
+    () => withTables(withShortcuts(withHistory(withReact(createEditor())))),
+    []
+  );
+
   const savedSelection = React.useRef(editor.selection);
-
-  const onFocus = React.useCallback(() => {
-    setFocused(true);
-    if (!editor.selection && value?.length) {
-      Transforms.select(
-        editor,
-        savedSelection.current ?? Editor.end(editor, [])
-      );
-    }
-  }, [editor]);
-
-  const onBlur = React.useCallback(() => {
-    setFocused(false);
-    savedSelection.current = editor.selection;
-  }, [editor]);
 
   const divRef = React.useRef<HTMLDivElement>(null);
 
@@ -137,13 +126,12 @@ export const RichTextBlock: React.FC<RichTextBlockProps & Props> = ({
         <Toolbar />
         <Box padding={"15px 5px"}>
           <Editable
-            onFocus={onFocus}
-            onBlur={onBlur}
             onKeyDown={onKeyDown}
             renderElement={renderElement}
             renderLeaf={renderLeaf}
             placeholder="Enter some rich text…"
             spellCheck
+            autoFocus
             style={{ minHeight: "150px", resize: "vertical", overflow: "auto" }}
           />
         </Box>

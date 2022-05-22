@@ -9,15 +9,17 @@ import {
   Radio,
   RadioGroup,
   Spinner,
+  Stack,
 } from "@chakra-ui/react";
+import { usePostId } from "@hooks";
+import { api } from "@utils";
+import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import React from "react";
 import { useAlert } from "react-alert";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useSWRConfig } from "swr";
-import { RichTextBlock } from "../../components/RichTextBlog";
-import { usePostId } from "../../hooks/post.hook";
-import { api } from "../../utils";
+import { RichTextBlock } from "../../components/Editor/RichTextBlog";
 
 const InitialPost: React.FC = () => {
   let { id } = useParams();
@@ -40,6 +42,7 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
     content: post.content.content,
     status: post.status,
     slug: post.slug,
+    publishedAt: new Date(post.publishedAt),
   };
   //   console.log(post.status);
   const {
@@ -52,16 +55,24 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
   } = useForm({ defaultValues });
   const { mutate } = useSWRConfig();
   const alert = useAlert();
-  const onSubmit = (data) =>
+  const onSubmit = (data: { content: any; publishedAt: Date }) =>
     new Promise((resolve, reject) => {
       api
         .patch(`/posts/${post.id}`, {
           ...data,
           content: { content: data.content },
+          publishedAt: data.publishedAt.toISOString(),
         })
         .then(({ data }) => {
-          const { title, summary, content, status, slug } = data;
-          reset({ title, summary, content, status, slug });
+          const { title, summary, content, status, slug, publishedAt } = data;
+          reset({
+            title,
+            summary,
+            content: content.content,
+            status,
+            slug,
+            publishedAt: new Date(publishedAt),
+          });
           resolve(data);
         })
         .catch((reason) => {
@@ -72,67 +83,91 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="newPostDrawer">
-      <Controller
-        name="status"
-        control={control}
-        render={({ field }) => (
-          <FormControl as="fieldset">
-            <FormLabel as="legend">Status</FormLabel>
-            <RadioGroup {...field} defaultValue={field.value}>
-              <HStack spacing="24px">
-                <Radio value="PUBLISHED">Published</Radio>
-                <Radio value="DRAFT">Draft</Radio>
-              </HStack>
-            </RadioGroup>
-            {/* <FormHelperText>Select only if you're a fan.</FormHelperText> */}
-          </FormControl>
-        )}
-      />
+      <Stack spacing={3}>
+        <Controller
+          name="status"
+          control={control}
+          render={({ field }) => (
+            <FormControl as="fieldset">
+              <FormLabel as="legend">Status</FormLabel>
+              <RadioGroup {...field} defaultValue={field.value}>
+                <HStack spacing="24px">
+                  <Radio value="PUBLISHED">Published</Radio>
+                  <Radio value="DRAFT">Draft</Radio>
+                </HStack>
+              </RadioGroup>
+              {/* <FormHelperText>Select only if you're a fan.</FormHelperText> */}
+            </FormControl>
+          )}
+        />
 
-      <FormControl isRequired isInvalid={errors.title && touchedFields.title}>
-        <FormLabel htmlFor="title">Title</FormLabel>
-        <Input
-          id="title"
-          type="text"
-          {...register("title", { required: true })}
+        <FormControl isRequired isInvalid={errors.title && touchedFields.title}>
+          <FormLabel htmlFor="title">Title</FormLabel>
+          <Input
+            id="title"
+            type="text"
+            {...register("title", { required: true })}
+          />
+          <FormHelperText>Enter a title here</FormHelperText>
+          <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+        </FormControl>
+        <FormControl isRequired isInvalid={errors.slug && touchedFields.slug}>
+          <FormLabel htmlFor="slug">Slug</FormLabel>
+          <Input
+            id="slug"
+            type="text"
+            {...register("slug", { required: true })}
+          />
+          <FormHelperText>Edit the slug here</FormHelperText>
+          <FormErrorMessage>{errors.slug?.message}</FormErrorMessage>
+        </FormControl>
+        <Controller
+          name="publishedAt"
+          control={control}
+          render={({ field: { onChange, value }, fieldState }) => (
+            <FormControl
+              isRequired
+              isInvalid={errors.publishedAt && touchedFields.publishedAt}
+            >
+              <FormLabel htmlFor="publishedAt">Published At</FormLabel>
+
+              <SingleDatepicker
+                onDateChange={onChange}
+                date={value}
+                id="publishedAt"
+              />
+              <FormHelperText>Enter a Publish Date here</FormHelperText>
+              <FormErrorMessage>{errors.publishedAt?.message}</FormErrorMessage>
+            </FormControl>
+          )}
         />
-        <FormHelperText>Enter a title here</FormHelperText>
-        <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
-      </FormControl>
-      <FormControl isRequired isInvalid={errors.slug && touchedFields.slug}>
-        <FormLabel htmlFor="slug">Slug</FormLabel>
-        <Input
-          id="slug"
-          type="text"
-          {...register("slug", { required: true })}
+        <FormControl
+          isRequired
+          isInvalid={errors.summary && touchedFields.summary}
+        >
+          <FormLabel htmlFor="summary">Summary</FormLabel>
+          <Input
+            id="summary"
+            type="text"
+            {...register("summary", { required: true })}
+          />
+          <FormHelperText>
+            Enter a quick summary of the post here
+          </FormHelperText>
+          <FormErrorMessage>{errors.summary?.message}</FormErrorMessage>
+        </FormControl>
+        <Controller
+          render={({ field: { value, onChange } }) => (
+            <RichTextBlock value={value} onChange={onChange} />
+          )}
+          control={control}
+          name="content"
         />
-        <FormHelperText>Edit the slug here</FormHelperText>
-        <FormErrorMessage>{errors.slug?.message}</FormErrorMessage>
-      </FormControl>
-      <FormControl
-        isRequired
-        isInvalid={errors.summary && touchedFields.summary}
-      >
-        <FormLabel htmlFor="summary">Summary</FormLabel>
-        <Input
-          id="summary"
-          type="text"
-          {...register("summary", { required: true })}
-        />
-        <FormHelperText>Enter a quick summary of the post here</FormHelperText>
-        <FormErrorMessage>{errors.summary?.message}</FormErrorMessage>
-      </FormControl>
-      <Controller
-        render={({ field: { value, onChange } }) => (
-          <RichTextBlock value={value} onChange={onChange} />
-        )}
-        control={control}
-        name="content"
-      />
-      <br />
-      <Button type="submit" isLoading={isSubmitting} disabled={!isDirty}>
-        Save
-      </Button>
+
+        <Button type="submit" isLoading={isSubmitting} disabled={!isDirty}>
+          Save
+        </Button>
+      </Stack>
     </form>
   );
 };

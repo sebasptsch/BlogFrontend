@@ -1,8 +1,7 @@
 import useSWR from "swr";
-import { fetcher } from "../utils";
 
 export function usePostSlug(slug) {
-  const { data, error } = useSWR(`/posts/slug/${slug}`, fetcher);
+  const { data, error } = useSWR(`/posts/slug/${slug}`);
 
   return {
     post: data,
@@ -12,7 +11,7 @@ export function usePostSlug(slug) {
 }
 
 export function usePostId(id: number) {
-  const { data, error } = useSWR(`/posts/${id}`, fetcher);
+  const { data, error } = useSWR(`/posts/${id}`);
 
   return {
     post: data,

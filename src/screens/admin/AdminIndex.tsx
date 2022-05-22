@@ -9,10 +9,9 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { useMe, useMyPosts } from "@hooks";
 import PostCreationDrawer from "../../components/PostCreationDrawer";
 import PostMenu from "../../components/PostMenu";
-import useMe from "../../hooks/me.hook";
-import useMyPosts from "../../hooks/myposts.hook";
 
 export default function AdminIndex() {
   const { posts, isError: postsError, isLoading: postsLoading } = useMyPosts();

@@ -1,7 +1,7 @@
 import { Heading, LinkBox, Spinner, Tag } from "@chakra-ui/react";
+import { useUser } from "@hooks";
 import moment from "moment";
 import { Link } from "react-router-dom";
-import useUser from "../hooks/user.hook";
 
 interface Post {
   id: number;
@@ -13,6 +13,7 @@ interface Post {
   userId: number;
   createdAt: string;
   updatedAt: string;
+  publishedAt: string;
 }
 
 export default function PostItem(props: { post: Post }) {
@@ -27,7 +28,7 @@ export default function PostItem(props: { post: Post }) {
       p={5}
       to={`/posts/${props.post.slug}`}
     >
-      {moment(props.post.updatedAt).fromNow()}
+      {moment(props.post.publishedAt).calendar()}
       {props.post.status === "PUBLISHED" ? null : (
         <Tag>{props.post.status}</Tag>
       )}

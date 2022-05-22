@@ -1,21 +1,24 @@
 import {
-  Avatar,
   Button,
   ButtonGroup,
   Container,
   Flex,
+  IconButton,
   Img,
   Spacer,
+  useColorMode,
 } from "@chakra-ui/react";
+import { useLoggedIn } from "@hooks";
+import { logout } from "@utils";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
-import useMe from "../hooks/me.hook";
-import { api } from "../utils";
 
 export default function Nav() {
-  const { user, isError, isLoading } = useMe();
+  const { loggedIn } = useLoggedIn();
   const navigate = useNavigate();
   const { mutate } = useSWRConfig();
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Container maxW="container.lg">
       <Flex m={3}>
@@ -25,33 +28,15 @@ export default function Nav() {
 
         <Spacer />
         <ButtonGroup spacing={6}>
-          {user ? (
+          <IconButton
+            aria-label="switch theme"
+            onClick={toggleColorMode}
+            icon={colorMode === "dark" ? <MdDarkMode /> : <MdLightMode />}
+          />
+          {loggedIn ? (
             <>
-              <Button
-                onClick={() => {
-                  api.post("/auth/logout", undefined).then(() => {
-                    mutate("/users/me");
-                    navigate("/");
-                  });
-                }}
-              >
-                Logout
-              </Button>
-              <Button
-                as={Link}
-                to="/users/me"
-                leftIcon={
-                  <Avatar
-                    size="sm"
-                    name={user.name}
-                    src={
-                      user?.avatar?.id
-                        ? `/api/images/${user.avatar.id}`
-                        : undefined
-                    }
-                  />
-                }
-              >
+              <Button onClick={() => logout(mutate)}>Logout</Button>
+              <Button as={Link} to="/profile">
                 Profile
               </Button>
             </>

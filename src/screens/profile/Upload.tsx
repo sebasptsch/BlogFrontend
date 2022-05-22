@@ -4,12 +4,12 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  InputGroup,
+  InputGroup
 } from "@chakra-ui/react";
+import { api } from "@utils";
 import { ReactNode, useRef } from "react";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
 import { useSWRConfig } from "swr";
-import { api } from "../../utils";
 
 type FileUploadProps = {
   register: UseFormRegisterReturn;

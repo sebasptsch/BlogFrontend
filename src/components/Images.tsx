@@ -1,5 +1,5 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
-import useImages from "../hooks/images.hook";
+import { useImages } from "@hooks";
 import ImageComponent from "./Image";
 
 export default function Images() {

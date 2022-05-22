@@ -14,13 +14,12 @@ import {
   Input,
   useDisclosure,
 } from "@chakra-ui/react";
+import { api } from "@utils";
 import { useAlert } from "react-alert";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
-import { api } from "../utils";
-import { RichTextBlock } from "./RichTextBlog";
-
+import { RichTextBlock } from "./Editor/RichTextBlog";
 export default function PostCreationDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -37,7 +36,10 @@ export default function PostCreationDrawer() {
   const onSubmit = (data) =>
     new Promise((resolve, reject) => {
       api
-        .post("/posts", { ...data, content: { content: data.content } })
+        .post("/posts", {
+          ...data,
+          content: { content: data.content },
+        })
         .then((result) => {
           mutate("/posts/me");
           navigate(`/admin/edit/${result.data.id}`);

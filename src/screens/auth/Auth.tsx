@@ -1,7 +1,9 @@
 import { Box, Button, ButtonGroup, Center, Divider } from "@chakra-ui/react";
+import { createOAuthWindow } from "@utils";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
+import { mutate } from "swr";
 export default function AuthScreen() {
   return (
     <GoogleReCaptchaProvider
@@ -9,7 +11,7 @@ export default function AuthScreen() {
       scriptProps={{
         async: false, // optional, default to false,
         defer: false, // optional, default to false
-        appendTo: "head", // optional, default to "head", can be "head" or "body",
+        appendTo: "body", // optional, default to "head", can be "head" or "body",
         nonce: undefined, // optional, default undefined
       }}
     >
@@ -18,10 +20,16 @@ export default function AuthScreen() {
           <Outlet />
           <Divider my={4} />
           <ButtonGroup>
-            <Button as="a" href="/api/auth/github" leftIcon={<FaGithub />}>
+            <Button
+              leftIcon={<FaGithub />}
+              onClick={() => createOAuthWindow("/api/auth/github", mutate)}
+            >
               Github
             </Button>
-            <Button as="a" href="/api/auth/discord" leftIcon={<FaDiscord />}>
+            <Button
+              leftIcon={<FaDiscord />}
+              onClick={() => createOAuthWindow("/api/auth/discord", mutate)}
+            >
               Discord
             </Button>
           </ButtonGroup>

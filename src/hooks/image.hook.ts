@@ -1,8 +1,8 @@
 import useSWR from "swr";
-import { fetcher } from "../utils";
+import { fetcher } from "@utils";
 
-export default function useImage(id: number) {
-  const { data, error } = useSWR(`/images/${id}`, fetcher);
+export function useImage(id: number) {
+  const { data, error } = useSWR(`/images/${id}`);
 
   return {
     image: data,

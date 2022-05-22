@@ -1,13 +1,11 @@
 import { Box, ButtonGroup, IconButton, Image } from "@chakra-ui/react";
-import { BsPersonSquare } from "react-icons/bs";
+import { api } from "@utils";
 import { FaTrash } from "react-icons/fa";
 import { useSWRConfig } from "swr";
-import { api } from "../utils";
 export default function ImageComponent(props: {
   image: {
     id: number;
     userId: number;
-    avatarUserId?: number;
   };
   boxSize?: string;
 }) {
@@ -17,23 +15,13 @@ export default function ImageComponent(props: {
     api.delete(`/images/${props.image.id}`).then(() => mutate("/images"));
   };
   // console.log(props.image);
-  const setAsAvatar = () =>
-    api
-      .patch("/users", {
-        avatarId: props.image.id,
-      })
-      .then(() => {
-        mutate("/images");
-        mutate("/users/me");
-      });
   return (
     <Box
       // as="a"
       // href={`http://localhost:3000/images/${props.id}`}
       overflow="hidden"
-      borderWidth={props.image.avatarUserId ? "3px" : "1px"}
+      borderWidth={"1px"}
       borderRadius="lg"
-      borderColor={props.image.avatarUserId ? "green.300" : undefined}
     >
       <Image
         src={`http://localhost:3002/api/images/${props.image.id}`}
@@ -48,12 +36,12 @@ export default function ImageComponent(props: {
             icon={<FaTrash />}
             colorScheme="red"
           />
-          <IconButton
+          {/* <IconButton
             aria-label="Set Avatar"
             onClick={setAsAvatar}
             icon={<BsPersonSquare />}
             colorScheme="blue"
-          />
+          /> */}
         </ButtonGroup>
       </Box>
     </Box>
