@@ -1,4 +1,6 @@
 import {
+  Divider,
+  Heading,
   Table,
   TableContainer,
   Tag,
@@ -18,6 +20,10 @@ export default function AdminIndex() {
   const { user, isError: userError, isLoading: userLoading } = useMe();
   return (
     <>
+      <Heading as="h1" textAlign={"center"}>
+        Admin Dashboard
+      </Heading>
+      <Divider my={5} />
       <PostCreationDrawer />
       <TableContainer>
         <Table variant={"simple"}>
@@ -30,24 +36,33 @@ export default function AdminIndex() {
             </Tr>
           </Thead>
           <Tbody>
-            {posts
-              ?.sort((postA, postB) => postA.createdAt > postB.createdAt)
-              .map((post) => (
-                <Tr key={post.id}>
-                  <Td>{post.title}</Td>
-                  <Td>{post.slug}</Td>
-                  <Td>
-                    <Tag
-                      colorScheme={post.status === "DRAFT" ? "blue" : "green"}
-                    >
-                      {post.status}
-                    </Tag>
-                  </Td>
-                  <Td isNumeric>
-                    <PostMenu post={post} />
-                  </Td>
-                </Tr>
-              ))}
+            {!!posts?.length ? (
+              posts
+                ?.sort((postA, postB) => postA.publishedAt > postB.publishedAt)
+                ?.map((post) => (
+                  <Tr key={post.id}>
+                    <Td>{post.title}</Td>
+                    <Td>{post.slug}</Td>
+                    <Td>
+                      <Tag
+                        colorScheme={post.status === "DRAFT" ? "blue" : "green"}
+                      >
+                        {post.status}
+                      </Tag>
+                    </Td>
+                    <Td isNumeric>
+                      <PostMenu post={post} />
+                    </Td>
+                  </Tr>
+                ))
+            ) : (
+              <Tr>
+                <Td>No Posts Yet</Td>
+                <Td></Td>
+                <Td></Td>
+                <Td></Td>
+              </Tr>
+            )}
           </Tbody>
           <Tfoot>
             <Tr>

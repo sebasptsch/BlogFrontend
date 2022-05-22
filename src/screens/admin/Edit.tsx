@@ -10,6 +10,7 @@ import {
   RadioGroup,
   Spinner,
   Stack,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { usePostId } from "@hooks";
 import { api } from "@utils";
@@ -53,6 +54,7 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
     control,
     formState: { errors, isSubmitting, touchedFields, isDirty },
   } = useForm({ defaultValues });
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { mutate } = useSWRConfig();
   const alert = useAlert();
   const onSubmit = (data: { content: any; publishedAt: Date }) =>
@@ -164,9 +166,23 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
           name="content"
         />
 
-        <Button type="submit" isLoading={isSubmitting} disabled={!isDirty}>
+        <Button
+          type="submit"
+          isLoading={isSubmitting}
+          disabled={!isDirty}
+          form="newPostDrawer"
+        >
           Save
         </Button>
+        {/* <ImageSelect
+          onOpen={onOpen}
+          isOpen={isOpen}
+          onClose={onClose}
+          callback={(string) => {
+            console.log(string);
+          }}
+        />
+        <Button onClick={onOpen}>Open Dialog</Button> */}
       </Stack>
     </form>
   );

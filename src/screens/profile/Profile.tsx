@@ -21,38 +21,69 @@ export default function Me() {
   const { mutate } = useSWRConfig();
   const alert = useAlert();
   return (
-    <Container size="md">
+    <>
       {user ? (
         <>
           <Heading as="h1" textAlign={"center"}>
-            Hello {user.name}!
+            My Account
           </Heading>
           <Divider my={5} />
-          <StatGroup>
-            <Stat>
-              <StatLabel>Account Created</StatLabel>
-              <StatNumber>{moment(user.createdAt).fromNow()}</StatNumber>
-            </Stat>
+          <Container maxW="md">
+            <StatGroup>
+              <Stat>
+                <StatLabel>Account Created</StatLabel>
+                <StatNumber>
+                  {moment(user.createdAt).calendar(null, {
+                    lastDay: "[Yesterday]",
+                    sameDay: "[Today]",
+                    nextDay: "[Tomorrow]",
+                    lastWeek: "[last] dddd",
+                    nextWeek: "dddd",
+                    sameElse: "L",
+                  })}
+                </StatNumber>
+              </Stat>
 
-            <Stat>
-              <StatLabel>Account Last Updated</StatLabel>
-              <StatNumber>{moment(user.updatedAt).fromNow()}</StatNumber>
-            </Stat>
-          </StatGroup>
-          <StatGroup>
-            <Stat>
-              <StatLabel>
-                {user.accounts.length === 1 ? "Provider" : "Providers"}
-              </StatLabel>
-              <StatNumber>
-                {user.accounts.map((account) => account.provider).join()}
-              </StatNumber>
-            </Stat>
-            <Stat>
-              <StatLabel>Posts</StatLabel>
-              <StatNumber>{user._count.posts}</StatNumber>
-            </Stat>
-          </StatGroup>
+              <Stat>
+                <StatLabel>Account Last Updated</StatLabel>
+                <StatNumber>
+                  {moment(user.updatedAt).calendar(null, {
+                    lastDay: "[Yesterday]",
+                    sameDay: "[Today]",
+                    nextDay: "[Tomorrow]",
+                    lastWeek: "[last] dddd",
+                    nextWeek: "dddd",
+                    sameElse: "L",
+                  })}
+                </StatNumber>
+              </Stat>
+            </StatGroup>
+            <StatGroup>
+              <Stat>
+                <StatLabel>
+                  {user.accounts.length === 1 ? "Provider" : "Providers"}
+                </StatLabel>
+                <StatNumber>
+                  {user.accounts.map((account) => account.provider).join()}
+                </StatNumber>
+              </Stat>
+              <Stat>
+                <StatLabel>Role</StatLabel>
+                <StatNumber>{user.role}</StatNumber>
+              </Stat>
+            </StatGroup>
+            <StatGroup>
+              <Stat>
+                <StatLabel>Images</StatLabel>
+                <StatNumber>{user._count.images}</StatNumber>
+              </Stat>
+              <Stat>
+                <StatLabel>Posts</StatLabel>
+                <StatNumber>{user._count.posts}</StatNumber>
+              </Stat>
+            </StatGroup>
+          </Container>
+
           <ButtonGroup>
             <Button
               colorScheme="red"
@@ -67,6 +98,6 @@ export default function Me() {
       )}
 
       {/* <Images /> */}
-    </Container>
+    </>
   );
 }

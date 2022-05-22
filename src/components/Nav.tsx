@@ -1,3 +1,4 @@
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Button,
   ButtonGroup,
@@ -5,10 +6,14 @@ import {
   Flex,
   IconButton,
   Img,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Spacer,
   useColorMode,
 } from "@chakra-ui/react";
-import { useLoggedIn } from "@hooks";
+import { useIsAdmin, useLoggedIn } from "@hooks";
 import { logout } from "@utils";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,6 +21,7 @@ import { useSWRConfig } from "swr";
 
 export default function Nav() {
   const { loggedIn } = useLoggedIn();
+  const { isAdmin } = useIsAdmin();
   const navigate = useNavigate();
   const { mutate } = useSWRConfig();
   const { colorMode, toggleColorMode } = useColorMode();
@@ -36,9 +42,26 @@ export default function Nav() {
           {loggedIn ? (
             <>
               <Button onClick={() => logout(mutate)}>Logout</Button>
-              <Button as={Link} to="/profile">
-                Profile
-              </Button>
+              <Menu>
+                <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                  Profile
+                </MenuButton>
+                <MenuList>
+                  <MenuItem as={Link} to="/profile">
+                    My Account
+                  </MenuItem>
+                  {isAdmin ? (
+                    <MenuItem as={Link} to="/admin">
+                      Posts
+                    </MenuItem>
+                  ) : null}
+                  {isAdmin ? (
+                    <MenuItem as={Link} to="/images">
+                      Images
+                    </MenuItem>
+                  ) : null}
+                </MenuList>
+              </Menu>
             </>
           ) : (
             <>

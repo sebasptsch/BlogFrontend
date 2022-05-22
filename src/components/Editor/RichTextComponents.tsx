@@ -1,8 +1,12 @@
 import {
+  Box,
+  Button,
   chakra,
   Heading,
   HStack,
   IconButton,
+  IconButtonProps,
+  Image as ChakraImage,
   Kbd,
   ListItem,
   OrderedList,
@@ -12,6 +16,7 @@ import {
   Tr,
   UnorderedList,
   useColorMode,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
 import {
@@ -22,6 +27,7 @@ import {
   MdFormatListNumbered,
   MdFormatQuote,
   MdFormatUnderlined,
+  MdImage,
   MdKeyboard,
   MdLooks3,
   MdLooks4,
@@ -41,8 +47,13 @@ import {
   ReactEditor,
   RenderElementProps,
   RenderLeafProps,
+  useFocused,
+  useSelected,
   useSlate,
+  useSlateStatic,
 } from "slate-react";
+import { ImageSelect } from "./ImageSelect";
+import { insertImage } from "./withImages";
 
 type EditorProps = BaseEditor & ReactEditor;
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
@@ -132,10 +143,11 @@ export const MarkButton = ({
 export const BlockButton = ({
   format,
   icon,
+  ...props
 }: {
   format: string;
   icon: ReactElement;
-}) => {
+} & IconButtonProps) => {
   const editor = useSlate();
   return (
     <IconButton
@@ -150,11 +162,13 @@ export const BlockButton = ({
       icon={icon}
       borderWidth={0}
       fontSize={"20px"}
+      {...props}
     />
   );
 };
 
-export const Toolbar = () => {
+export const Toolbar = ({ editor }: { editor: BaseEditor & ReactEditor }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <HStack
       borderWidth={"0 0 1px 0"}
@@ -167,15 +181,69 @@ export const Toolbar = () => {
       <MarkButton format="underline" icon={<MdFormatUnderlined />} />
       <MarkButton format="code" icon={<MdCode />} />
       <MarkButton format="kbd" icon={<MdKeyboard />} />
-      <BlockButton format="heading-one" icon={<MdLooksOne />} />
-      <BlockButton format="heading-two" icon={<MdLooksTwo />} />
-      <BlockButton format="heading-three" icon={<MdLooks3 />} />
-      <BlockButton format="heading-four" icon={<MdLooks4 />} />
-      <BlockButton format="heading-five" icon={<MdLooks5 />} />
-      <BlockButton format="heading-six" icon={<MdLooks6 />} />
-      <BlockButton format="block-quote" icon={<MdFormatQuote />} />
-      <BlockButton format="numbered-list" icon={<MdFormatListNumbered />} />
-      <BlockButton format="bulleted-list" icon={<MdFormatListBulleted />} />
+      <BlockButton
+        format="heading-one"
+        icon={<MdLooksOne />}
+        aria-label={"heading-one"}
+      />
+      <BlockButton
+        format="heading-two"
+        icon={<MdLooksTwo />}
+        aria-label={"heading-two"}
+      />
+      <BlockButton
+        format="heading-three"
+        icon={<MdLooks3 />}
+        aria-label={"heading-three"}
+      />
+      <BlockButton
+        format="heading-four"
+        icon={<MdLooks4 />}
+        aria-label={"heading-four"}
+      />
+      <BlockButton
+        format="heading-five"
+        icon={<MdLooks5 />}
+        aria-label={"heading-five"}
+      />
+      <BlockButton
+        format="heading-six"
+        icon={<MdLooks6 />}
+        aria-label={"heading-six"}
+      />
+      <BlockButton
+        format="block-quote"
+        icon={<MdFormatQuote />}
+        aria-label={"block-quote"}
+      />
+      <BlockButton
+        format="numbered-list"
+        icon={<MdFormatListNumbered />}
+        aria-label={"numbered-list"}
+      />
+      <BlockButton
+        format="bulleted-list"
+        icon={<MdFormatListBulleted />}
+        aria-label={"bulleted-list"}
+      />
+      <BlockButton
+        format="image"
+        icon={<MdImage />}
+        aria-label={"image"}
+        onMouseDown={() => {}}
+        onClick={async (event) => {
+          event.preventDefault();
+          onOpen();
+        }}
+      />
+      <ImageSelect
+        onOpen={onOpen}
+        onClose={onClose}
+        isOpen={isOpen}
+        callback={(url) => {
+          insertImage(editor, url);
+        }}
+      />
     </HStack>
   );
 };
@@ -183,6 +251,35 @@ export const Toolbar = () => {
 const BlockquoteStyle: React.CSSProperties | undefined = {
   margin: "1.5em 10px",
   padding: "0.5em 10px",
+};
+
+const Image = ({ attributes, children, element }) => {
+  const editor = useSlateStatic();
+  const path = ReactEditor.findPath(editor, element);
+
+  const selected = useSelected();
+  const focused = useFocused();
+  return (
+    <div {...attributes}>
+      {children}
+
+      <Box contentEditable={false} style={{ position: "relative" }}>
+        <ChakraImage src={element.url} borderRadius={"lg"} />
+        <Button
+          colorScheme="red"
+          onMouseDown={() => Transforms.removeNodes(editor, { at: path })}
+          style={{
+            display: `${selected && focused ? "inline" : "none"}`,
+            position: "absolute",
+            top: "0.5em",
+            left: "0.5em",
+          }}
+        >
+          Remove Image
+        </Button>
+      </Box>
+    </div>
+  );
 };
 
 export const Element = ({
@@ -194,7 +291,10 @@ export const Element = ({
     type: string;
   };
 }) => {
+  const props = { attributes, children, element };
   switch (element.type) {
+    case "image":
+      return <Image {...props} />;
     case "table":
       return (
         <Table>

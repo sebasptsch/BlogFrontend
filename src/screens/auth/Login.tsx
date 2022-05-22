@@ -1,5 +1,8 @@
 import {
   Button,
+  Center,
+  Container,
+  Divider,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -36,43 +39,50 @@ export default function Login() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Heading>Login</Heading>
-        <FormControl isInvalid={errors.username}>
-          <FormLabel htmlFor="username">Username</FormLabel>
-          <Input
-            id="username"
-            type="text"
-            {...register("username", {
-              required: "Required",
-            })}
-          />
-          <FormErrorMessage>
-            {errors.username && errors.username.message}
-          </FormErrorMessage>
-        </FormControl>
+        <Heading as="h1" textAlign={"center"}>
+          Login
+        </Heading>
+        <Divider my={5} />
+        <Container>
+          <FormControl isInvalid={errors.username}>
+            <FormLabel htmlFor="username">Username</FormLabel>
+            <Input
+              id="username"
+              type="text"
+              {...register("username", {
+                required: "Required",
+              })}
+            />
+            <FormErrorMessage>
+              {errors.username && errors.username.message}
+            </FormErrorMessage>
+          </FormControl>
 
-        <FormControl isInvalid={errors.password}>
-          <FormLabel htmlFor="password">Password</FormLabel>
-          <Input
-            id="password"
-            type="password"
-            {...register("password", {
-              required: "Required",
-            })}
-          />
-          <FormErrorMessage>
-            {errors.password && errors.password.message}
-          </FormErrorMessage>
-        </FormControl>
-        <GoogleReCaptcha onVerify={onVerifyCaptcha} />
-        <Button
-          mt={4}
-          colorScheme="teal"
-          isLoading={isSubmitting}
-          type="submit"
-        >
-          Submit
-        </Button>
+          <FormControl isInvalid={errors.password}>
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <Input
+              id="password"
+              type="password"
+              {...register("password", {
+                required: "Required",
+              })}
+            />
+            <FormErrorMessage>
+              {errors.password && errors.password.message}
+            </FormErrorMessage>
+          </FormControl>
+          <GoogleReCaptcha onVerify={onVerifyCaptcha} />
+          <Center>
+            <Button
+              mt={4}
+              colorScheme="teal"
+              isLoading={isSubmitting}
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Center>
+        </Container>
       </form>
     </>
   );

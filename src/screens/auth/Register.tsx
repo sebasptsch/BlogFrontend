@@ -1,5 +1,8 @@
 import {
   Button,
+  Center,
+  Container,
+  Divider,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -19,6 +22,7 @@ export default function Register() {
     handleSubmit,
     register,
     setValue,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm();
   interface FormValues {
@@ -56,38 +60,65 @@ export default function Register() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Heading>Register</Heading>
-      <FormControl isInvalid={errors.username}>
-        <FormLabel htmlFor="username">First name</FormLabel>
-        <Input
-          id="username"
-          type="text"
-          {...register("username", {
-            required: "Required",
-          })}
-        />
-        <FormErrorMessage>
-          {errors.username && errors.username.message}
-        </FormErrorMessage>
-      </FormControl>
+      <Heading as="h1" textAlign={"center"}>
+        Register
+      </Heading>
+      <Divider my={5} />
+      <Container>
+        <FormControl isInvalid={errors.username}>
+          <FormLabel htmlFor="username">Username</FormLabel>
+          <Input
+            id="username"
+            type="text"
+            {...register("username", {
+              required: "Required",
+            })}
+          />
+          <FormErrorMessage>
+            {errors.username && errors.username.message}
+          </FormErrorMessage>
+        </FormControl>
 
-      <FormControl isInvalid={errors.password}>
-        <FormLabel htmlFor="password">Password</FormLabel>
-        <Input
-          id="password"
-          type="password"
-          {...register("password", {
-            required: "Required",
-          })}
-        />
-        <FormErrorMessage>
-          {errors.password && errors.password.message}
-        </FormErrorMessage>
-      </FormControl>
-      <GoogleReCaptcha onVerify={onVerifyCaptcha} />
-      <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
-        Submit
-      </Button>
+        <FormControl isInvalid={errors.password}>
+          <FormLabel htmlFor="password">Password</FormLabel>
+          <Input
+            id="password"
+            type="password"
+            {...register("password", {
+              required: "Required",
+            })}
+          />
+          <FormErrorMessage>
+            {errors.password && errors.password.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={errors.passwordconfirm}>
+          <FormLabel htmlFor="password">Confirm Password</FormLabel>
+          <Input
+            id="password"
+            type="password"
+            {...register("passwordconfirm", {
+              required: "Required",
+              validate: (value) =>
+                getValues("password") === value || "Passwords do not match",
+            })}
+          />
+          <FormErrorMessage>
+            {errors.passwordconfirm && errors.passwordconfirm.message}
+          </FormErrorMessage>
+        </FormControl>
+        <GoogleReCaptcha onVerify={onVerifyCaptcha} />
+        <Center>
+          <Button
+            mt={4}
+            colorScheme="teal"
+            isLoading={isSubmitting}
+            type="submit"
+          >
+            Submit
+          </Button>
+        </Center>
+      </Container>
     </form>
   );
 }

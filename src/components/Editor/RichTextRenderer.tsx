@@ -8,6 +8,7 @@ import {
   withReact,
 } from "slate-react";
 import { Element, Leaf } from "./RichTextComponents";
+import { withImages } from "./withImages";
 import { withShortcuts } from "./withShortcuts";
 import { withTables } from "./withTables";
 
@@ -17,7 +18,7 @@ interface Props {
 
 const RichTextRenderer: React.FC<Props> = ({ content }: Props) => {
   const editor = useMemo(
-    () => withShortcuts(withTables(withReact(createEditor()))),
+    () => withImages(withShortcuts(withTables(withReact(createEditor())))),
     []
   );
   const renderElement = useCallback(

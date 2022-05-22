@@ -4,6 +4,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Input,
   InputGroup,
   Modal,
   ModalBody,
@@ -28,7 +29,7 @@ type FileUploadProps = {
 };
 
 const FileUpload = (props: FileUploadProps) => {
-  const { register, accept, multiple, children } = props;
+  const { register, accept, children } = props;
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { ref, ...rest } = register as {
     ref: (instance: HTMLInputElement | null) => void;
@@ -40,8 +41,8 @@ const FileUpload = (props: FileUploadProps) => {
     <InputGroup onClick={handleClick}>
       <input
         type={"file"}
-        multiple={multiple || false}
         hidden
+        multiple={false}
         accept={accept}
         {...rest}
         ref={(e) => {
@@ -55,7 +56,8 @@ const FileUpload = (props: FileUploadProps) => {
 };
 
 type FormValues = {
-  file_: FileList;
+  file_: File;
+  name: string;
 };
 
 export default function ImageUploadModal() {
@@ -64,6 +66,7 @@ export default function ImageUploadModal() {
     register,
     handleSubmit,
     getFieldState,
+    reset,
     formState: { errors },
   } = useForm<FormValues>();
   const alert = useAlert();
@@ -73,12 +76,13 @@ export default function ImageUploadModal() {
 
   const onSubmit = (data: any) =>
     new Promise((resolve, reject) => {
-      const file = data.file_[0];
+      const file = data.file_;
+      const name = data.name;
       // console.log(data);
       api
         .post(
           "/images",
-          { file },
+          { file, name },
           {
             method: "POST",
             headers: {
@@ -92,6 +96,7 @@ export default function ImageUploadModal() {
             `Success, image uploaded with an id of ${response.data.id}`
           );
           mutate("/images");
+          reset();
           resolve(response);
         })
         .catch((error) => {
@@ -101,16 +106,14 @@ export default function ImageUploadModal() {
         });
     });
 
-  const validateFiles = (value: FileList) => {
-    if (value.length < 1) {
+  const validateFile = (value: File) => {
+    if (!value) {
       return "Files is required";
     }
-    for (const file of Array.from(value)) {
-      const fsMb = file.size / (1024 * 1024);
-      const MAX_FILE_SIZE = 1;
-      if (fsMb > MAX_FILE_SIZE) {
-        return "Max file size 10mb";
-      }
+    const fsMb = value.size / (1024 * 1024);
+    const MAX_FILE_SIZE = 1;
+    if (fsMb > MAX_FILE_SIZE) {
+      return "Max file size 10mb";
     }
     return true;
   };
@@ -125,12 +128,15 @@ export default function ImageUploadModal() {
             <ModalHeader>Upload New Image</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
+              <FormControl>
+                <FormLabel>{"File Nickname"}</FormLabel>
+                <Input {...register("name")} />
+              </FormControl>
               <FormControl isInvalid={!!errors.file_} isRequired>
                 <FormLabel>{"File input"}</FormLabel>
                 <FileUpload
                   accept={"image/*"}
-                  multiple
-                  register={register("file_", { validate: validateFiles })}
+                  register={register("file_", { validate: validateFile })}
                 >
                   <Button leftIcon={<ChevronUpIcon />}>Upload</Button>
                 </FileUpload>

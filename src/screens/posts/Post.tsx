@@ -1,4 +1,4 @@
-import { Divider, Heading, Skeleton } from "@chakra-ui/react";
+import { Container, Divider, Heading, Skeleton } from "@chakra-ui/react";
 import { usePostSlug } from "@hooks";
 import { useParams } from "react-router-dom";
 import RichTextRenderer from "../../components/Editor/RichTextRenderer";
@@ -9,12 +9,16 @@ export default function PostScreen() {
   if (isLoading) {
     return <Skeleton />;
   } else {
-    console.log(post.content.content);
+    // console.log(post.content.content);
     return (
       <>
-        <Heading>{post.title}</Heading>
-        <Divider />
-        <RichTextRenderer content={post.content.content} />
+        <Heading as="h1" textAlign={"center"}>
+          {post.title}
+        </Heading>
+        <Divider my={5} />
+        <Container maxWidth={"container.md"}>
+          <RichTextRenderer content={post.content.content} />
+        </Container>
       </>
     );
   }

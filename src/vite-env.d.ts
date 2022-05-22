@@ -6,9 +6,11 @@ import { ReactEditor, RenderLeafProps } from "slate-react";
 declare module "slate" {
   interface CustomTypes {
     Editor: BaseEditor & ReactEditor;
-    Element: BaseElement & {
-      type: string;
-    };
+    Element:
+      | (BaseElement & {
+          type: string;
+        })
+      | ImageElement;
     Node: BaseNode & {
       type: string;
     };
@@ -22,3 +24,12 @@ declare module "slate" {
     };
   }
 }
+
+export type ImageElement = {
+  type: "image";
+  url: string;
+  children: EmptyText[];
+};
+export type EmptyText = {
+  text: string;
+};

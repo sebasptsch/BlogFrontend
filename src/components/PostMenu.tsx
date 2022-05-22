@@ -49,7 +49,10 @@ const PostMenu: React.FC<Omit<MenuProps, "children"> & Props> = ({
             } else if (post.status === "DRAFT") {
               // Publish
               api
-                .patch(`/posts/${post.id}`, { status: "PUBLISHED" })
+                .patch(`/posts/${post.id}`, {
+                  status: "PUBLISHED",
+                  publishedAt: new Date().toISOString(),
+                })
                 .then(() => {
                   mutate("/posts/me");
                 });

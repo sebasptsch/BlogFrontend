@@ -54,7 +54,9 @@ export default function PostCreationDrawer() {
 
   return (
     <>
-      <Button onClick={onOpen} m={4}>{`Open Drawer`}</Button>
+      <Button onClick={onOpen} m={4}>
+        New Post
+      </Button>
 
       <Drawer onClose={onClose} isOpen={isOpen} size={"xl"}>
         <DrawerOverlay />

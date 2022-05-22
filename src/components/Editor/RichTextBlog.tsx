@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import isHotkey from "is-hotkey";
 import React, { useCallback, useMemo } from "react";
-import { createEditor, Descendant } from "slate";
+import { BaseEditor, createEditor, Descendant } from "slate";
 import { withHistory } from "slate-history";
 import {
   Editable,
@@ -12,6 +12,7 @@ import {
   withReact,
 } from "slate-react";
 import { Element, Leaf, toggleMark, Toolbar } from "./RichTextComponents";
+import { withImages } from "./withImages";
 import { withShortcuts } from "./withShortcuts";
 import { withTables } from "./withTables";
 
@@ -86,8 +87,11 @@ export const RichTextBlock: React.FC<RichTextBlockProps & Props> = ({
   );
   // const [value, setValue] = useState<Descendant[]>(exampleValue);
 
-  const editor = useMemo(
-    () => withTables(withShortcuts(withHistory(withReact(createEditor())))),
+  const editor: BaseEditor & ReactEditor = useMemo(
+    () =>
+      withImages(
+        withTables(withShortcuts(withHistory(withReact(createEditor()))))
+      ),
     []
   );
 
@@ -123,7 +127,7 @@ export const RichTextBlock: React.FC<RichTextBlockProps & Props> = ({
       borderRadius={"7"}
     >
       <Slate editor={editor} value={value} onChange={onChange}>
-        <Toolbar />
+        <Toolbar editor={editor} />
         <Box padding={"15px 5px"}>
           <Editable
             onKeyDown={onKeyDown}

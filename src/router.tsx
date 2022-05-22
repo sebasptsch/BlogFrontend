@@ -1,5 +1,5 @@
 import { Spinner } from "@chakra-ui/react";
-import { useLoggedIn } from "@hooks";
+import { useIsAdmin, useLoggedIn } from "@hooks";
 import {
   BrowserRouter,
   Navigate,
@@ -14,12 +14,14 @@ import AuthScreen from "./screens/auth/Auth";
 import DefaultAuth from "./screens/auth/DefaultAuth";
 import Login from "./screens/auth/Login";
 import Register from "./screens/auth/Register";
+import ImagesScreen from "./screens/images/ImagesScreen";
 import PostScreen from "./screens/posts/Post";
 import Posts from "./screens/posts/Posts";
 import Me from "./screens/profile/Profile";
 
 export default function AppRouter() {
-  const { loggedIn, isLoading } = useLoggedIn();
+  const { loggedIn, isLoading: isLoggedInLoading } = useLoggedIn();
+  const { isAdmin, isLoading: isAdminLoading } = useIsAdmin();
   return (
     <BrowserRouter>
       <Routes>
@@ -28,7 +30,10 @@ export default function AppRouter() {
           <Route
             path="auth"
             element={
-              <IsntLoggedInRoute loggedIn={loggedIn} isLoading={isLoading}>
+              <IsntLoggedInRoute
+                loggedIn={loggedIn}
+                isLoading={isLoggedInLoading}
+              >
                 <AuthScreen />
               </IsntLoggedInRoute>
             }
@@ -38,25 +43,30 @@ export default function AppRouter() {
             <Route index element={<DefaultAuth />} />
           </Route>
           <Route
+            path="images"
+            element={
+              <AdminRoute isAdmin={isAdmin} isLoading={isAdminLoading}>
+                <ImagesScreen />
+              </AdminRoute>
+            }
+          />
+          <Route
             path="profile"
             element={
-              <ProtectedRoute loggedIn={loggedIn} isLoading={isLoading}>
+              <ProtectedRoute loggedIn={loggedIn} isLoading={isLoggedInLoading}>
                 <Me />
               </ProtectedRoute>
             }
           />
-          {/* <Route path="users">
-            
-          </Route> */}
           <Route path="posts">
             <Route path=":slug" element={<PostScreen />} />
           </Route>
           <Route
             path="admin"
             element={
-              <ProtectedRoute loggedIn={loggedIn} isLoading={isLoading}>
+              <AdminRoute isAdmin={isAdmin} isLoading={isAdminLoading}>
                 <Outlet />
-              </ProtectedRoute>
+              </AdminRoute>
             }
           >
             <Route index element={<AdminIndex />} />
@@ -89,6 +99,19 @@ const IsntLoggedInRoute = ({
 }) => {
   if (isLoading) return <Spinner />;
   if (loggedIn) {
+    return <Navigate to={redirectPath} replace />;
+  }
+  return children;
+};
+
+const AdminRoute = ({
+  isAdmin,
+  isLoading = true,
+  redirectPath = "/",
+  children,
+}) => {
+  if (isLoading) return <Spinner />;
+  if (!isAdmin) {
     return <Navigate to={redirectPath} replace />;
   }
   return children;
