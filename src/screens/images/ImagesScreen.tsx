@@ -46,9 +46,7 @@ export default function ImagesScreen() {
 const ImageBox = (data: {
   image: { id: number; mutate; alert; name: string };
 }) => {
-  const { onCopy, hasCopied } = useClipboard(
-    `http://localhost:3002/api/images/${data.image.id}`
-  );
+  const { onCopy, hasCopied } = useClipboard(`/api/images/${data.image.id}`);
   return (
     <Box
       key={data.image.id}
@@ -57,7 +55,7 @@ const ImageBox = (data: {
       borderRadius="lg"
     >
       <img
-        src={`http://localhost:3002/api/images/${data.image.id}`}
+        src={`/api/images/${data.image.id}`}
         alt={data.image.id.toString()}
         style={{ height: "auto", objectFit: "fill" }}
       />

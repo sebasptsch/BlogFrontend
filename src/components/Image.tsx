@@ -24,7 +24,7 @@ export default function ImageComponent(props: {
       borderRadius="lg"
     >
       <Image
-        src={`http://localhost:3002/api/images/${props.image.id}`}
+        src={`/api/images/${props.image.id}`}
         // boxSize={props.boxSize ?? "100px"}
         // objectFit={"cover"}
       />
