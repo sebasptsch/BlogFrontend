@@ -75,6 +75,9 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
             slug,
             publishedAt: new Date(publishedAt),
           });
+          mutate(`/posts/${post.id}`);
+          mutate(`/posts/slug/${post.slug}`);
+          mutate(`/posts/me`);
           resolve(data);
         })
         .catch((reason) => {
