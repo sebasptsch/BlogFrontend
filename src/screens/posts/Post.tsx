@@ -1,5 +1,6 @@
 import { Container, Divider, Heading, Skeleton } from "@chakra-ui/react";
 import { usePostSlug } from "@hooks";
+import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import RichTextRenderer from "../../components/Editor/RichTextRenderer";
 
@@ -12,6 +13,10 @@ export default function PostScreen() {
     // console.log(post.content.content);
     return (
       <>
+        <Helmet>
+          <title>{post.title}</title>
+          <meta name="description" content={post.summary} />
+        </Helmet>
         <Heading as="h1" textAlign={"center"}>
           {post.title}
         </Heading>

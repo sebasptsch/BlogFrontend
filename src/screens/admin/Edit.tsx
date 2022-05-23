@@ -17,6 +17,7 @@ import { api } from "@utils";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import React from "react";
 import { useAlert } from "react-alert";
+import { Helmet } from "react-helmet";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useSWRConfig } from "swr";
@@ -88,6 +89,10 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="newPostDrawer">
+      <Helmet>
+        <title>{post.title} | Edit</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <Stack spacing={3}>
         <Controller
           name="status"

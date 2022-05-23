@@ -13,6 +13,7 @@ import { api } from "@utils";
 import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import { GoogleReCaptcha } from "react-google-recaptcha-v3";
+import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
@@ -60,6 +61,10 @@ export default function Register() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Helmet>
+        <title>Register</title>
+        <meta name="description" content="Login to your account." />
+      </Helmet>
       <Heading as="h1" textAlign={"center"}>
         Register
       </Heading>

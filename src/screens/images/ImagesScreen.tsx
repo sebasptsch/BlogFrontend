@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { useImages } from "@hooks";
 import { useAlert } from "react-alert";
+import { Helmet } from "react-helmet";
 import { useSWRConfig } from "swr";
 import ImageUploadModal from "../../components/ImageUploadModal";
 import { deleteImage } from "../../utils/requests";
@@ -23,6 +24,10 @@ export default function ImagesScreen() {
 
   return (
     <>
+      <Helmet defaultTitle="Images">
+        <title>Images</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <Heading as="h1" textAlign={"center"}>
         Images
       </Heading>

@@ -1,14 +1,19 @@
-import { Container } from "@chakra-ui/react";
+import { Container, Flex, Spacer } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
+import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 
 function App() {
   return (
     <>
-      <Nav />
-      <Container maxW="container.lg">
-        <Outlet />
-      </Container>
+      <Flex direction={"column"} minH="100vh">
+        <Nav />
+        <Container maxW="container.lg">
+          <Outlet />
+        </Container>
+        <Spacer />
+        <Footer />
+      </Flex>
     </>
   );
 }

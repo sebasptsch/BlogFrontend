@@ -5,7 +5,7 @@ import {
   Container,
   Flex,
   IconButton,
-  Img,
+  Image,
   Menu,
   MenuButton,
   MenuItem,
@@ -18,6 +18,7 @@ import { logout } from "@utils";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
+import Logo from "../logo.svg";
 
 export default function Nav() {
   const { loggedIn } = useLoggedIn();
@@ -29,7 +30,7 @@ export default function Nav() {
     <Container maxW="container.lg">
       <Flex m={3}>
         <Link to="">
-          <Img src="" alt="SP Logo" />
+          <Image maxHeight={10} src={Logo} />
         </Link>
 
         <Spacer />

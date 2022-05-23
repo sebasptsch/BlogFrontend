@@ -13,6 +13,7 @@ import {
 import { useMe } from "@hooks";
 import moment from "moment";
 import { useAlert } from "react-alert";
+import { Helmet } from "react-helmet";
 import { useSWRConfig } from "swr";
 import { deleteAccount } from "../../utils/requests";
 
@@ -24,6 +25,10 @@ export default function Me() {
     <>
       {user ? (
         <>
+          <Helmet>
+            <title>Profile</title>
+            <meta name="robots" content="noindex, nofollow" />
+          </Helmet>
           <Heading as="h1" textAlign={"center"}>
             My Account
           </Heading>

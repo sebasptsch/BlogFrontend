@@ -13,6 +13,7 @@ import { login } from "@utils";
 import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import { GoogleReCaptcha } from "react-google-recaptcha-v3";
+import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
@@ -39,6 +40,10 @@ export default function Login() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <Helmet>
+          <title>Login</title>
+          <meta name="description" content="Login to your account." />
+        </Helmet>
         <Heading as="h1" textAlign={"center"}>
           Login
         </Heading>

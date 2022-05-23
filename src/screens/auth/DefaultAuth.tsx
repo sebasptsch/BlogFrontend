@@ -5,10 +5,16 @@ import {
   Divider,
   Heading,
 } from "@chakra-ui/react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 export default function DefaultAuth() {
   return (
     <>
+      <Helmet>
+        <title>Login or Register</title>
+        <meta name="description" content="Login to or register an account." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <Heading as="h1" textAlign={"center"}>
         Login/Signup
       </Heading>

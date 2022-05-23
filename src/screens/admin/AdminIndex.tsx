@@ -12,6 +12,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { useMe, useMyPosts } from "@hooks";
+import { Helmet } from "react-helmet";
 import PostCreationDrawer from "../../components/PostCreationDrawer";
 import PostMenu from "../../components/PostMenu";
 
@@ -20,6 +21,10 @@ export default function AdminIndex() {
   const { user, isError: userError, isLoading: userLoading } = useMe();
   return (
     <>
+      <Helmet>
+        <title>Admin</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <Heading as="h1" textAlign={"center"}>
         Admin Dashboard
       </Heading>
