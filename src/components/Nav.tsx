@@ -38,26 +38,44 @@ export default function Nav() {
           <IconButton
             aria-label="switch theme"
             onClick={toggleColorMode}
+            className="umami--click--theme-button"
             icon={colorMode === "dark" ? <MdDarkMode /> : <MdLightMode />}
           />
           {loggedIn ? (
             <>
-              <Button onClick={() => logout(mutate)}>Logout</Button>
+              <Button
+                onClick={() => logout(mutate)}
+                className="umami--click--logout-button"
+              >
+                Logout
+              </Button>
               <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                   Profile
                 </MenuButton>
                 <MenuList>
-                  <MenuItem as={Link} to="/profile">
+                  <MenuItem
+                    as={Link}
+                    to="/profile"
+                    className="umami--click--profile-button"
+                  >
                     My Account
                   </MenuItem>
                   {isAdmin ? (
-                    <MenuItem as={Link} to="/admin">
+                    <MenuItem
+                      as={Link}
+                      to="/admin"
+                      className="umami--click--posts-button"
+                    >
                       Posts
                     </MenuItem>
                   ) : null}
                   {isAdmin ? (
-                    <MenuItem as={Link} to="/images">
+                    <MenuItem
+                      as={Link}
+                      to="/images"
+                      className="umami--click--images-button"
+                    >
                       Images
                     </MenuItem>
                   ) : null}
@@ -66,10 +84,18 @@ export default function Nav() {
             </>
           ) : (
             <>
-              <Button as={Link} to="/auth/login">
+              <Button
+                as={Link}
+                to="/auth/login"
+                className="umami--click--signin-button"
+              >
                 Sign In
               </Button>
-              <Button as={Link} to="/auth/register">
+              <Button
+                as={Link}
+                to="/auth/register"
+                className="umami--click--signup-button"
+              >
                 Sign Up
               </Button>
             </>

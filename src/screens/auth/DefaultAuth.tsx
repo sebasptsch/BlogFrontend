@@ -21,10 +21,18 @@ export default function DefaultAuth() {
       <Divider my={5} />
       <Center>
         <ButtonGroup>
-          <Button as={Link} to="/auth/login">
+          <Button
+            as={Link}
+            to="/auth/login"
+            className="umami--click--signin-button"
+          >
             Login
           </Button>
-          <Button as={Link} to="/auth/register">
+          <Button
+            as={Link}
+            to="/auth/register"
+            className="umami--click--signup-button"
+          >
             Register
           </Button>
         </ButtonGroup>

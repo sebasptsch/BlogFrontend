@@ -21,12 +21,14 @@ export default function AuthScreen() {
         <ButtonGroup>
           <Button
             leftIcon={<FaGithub />}
+            className="umami--click--githublogin-button"
             onClick={() => createOAuthWindow("/api/auth/github", mutate)}
           >
             Github
           </Button>
           <Button
             leftIcon={<FaDiscord />}
+            className="umami--click--discordlogin-button"
             onClick={() => createOAuthWindow("/api/auth/discord", mutate)}
           >
             Discord
