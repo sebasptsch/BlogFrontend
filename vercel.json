@@ -1,6 +1,14 @@
 {
     "rewrites": [
         {
+            "rewrites": [
+                {
+                    "source": "/(.*)",
+                    "destination": "/index.html"
+                }
+            ]
+        },
+        {
             "source": "/api/:path*",
             "destination": "https://api.sebasptsch.dev/:path*"
         }
