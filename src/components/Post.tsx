@@ -20,7 +20,6 @@ export default function PostItem(props: { post }) {
     <LinkBox
       as={Link}
       m={2}
-      maxW="md"
       borderWidth="1px"
       borderRadius="lg"
       p={5}

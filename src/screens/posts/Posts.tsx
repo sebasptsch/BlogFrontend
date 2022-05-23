@@ -1,22 +1,24 @@
-import { Divider, Heading, Skeleton, Stack } from "@chakra-ui/react";
+import { Divider, Heading, SimpleGrid, Skeleton } from "@chakra-ui/react";
 import PostItem from "../../components/Post";
 import { usePosts } from "../../hooks/posts.hook";
 
-export default function Posts() {
+export default function Posts({ title = true }: { title?: boolean }) {
   const { posts, isLoading, isError } = usePosts();
   return (
     <>
-      <Heading as="h1" textAlign={"center"}>
-        Posts
-      </Heading>
+      {title ? (
+        <Heading as="h1" textAlign={"center"}>
+          Posts
+        </Heading>
+      ) : null}
       <Divider my={5} />
-      <Stack>
+      <SimpleGrid columns={[1, 2]} spacing={10} width="100%">
         {isLoading ? (
           <Skeleton />
         ) : (
           posts?.map((post) => <PostItem post={post} key={post.id} />)
         )}
-      </Stack>
+      </SimpleGrid>
     </>
   );
 }

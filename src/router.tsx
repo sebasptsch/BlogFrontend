@@ -14,9 +14,9 @@ import AuthScreen from "./screens/auth/Auth";
 import DefaultAuth from "./screens/auth/DefaultAuth";
 import Login from "./screens/auth/Login";
 import Register from "./screens/auth/Register";
+import HomeScreen from "./screens/home/HomeScreen";
 import ImagesScreen from "./screens/images/ImagesScreen";
 import PostScreen from "./screens/posts/Post";
-import Posts from "./screens/posts/Posts";
 import Me from "./screens/profile/Profile";
 
 export default function AppRouter() {
@@ -26,7 +26,7 @@ export default function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<Posts />} />
+          <Route index element={<HomeScreen />} />
           <Route
             path="auth"
             element={
