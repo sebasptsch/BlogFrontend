@@ -3,6 +3,7 @@ import {
   Heading,
   Table,
   TableContainer,
+  Tag,
   Tbody,
   Td,
   Tfoot,
@@ -11,45 +12,13 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { useMe, useMyPosts } from "@hooks";
-import { useMemo } from "react";
 import { Helmet } from "react-helmet";
-import { useSortBy, useTable } from "react-table";
 import PostCreationDrawer from "../../components/PostCreationDrawer";
+import PostMenu from "../../components/PostMenu";
 
 export default function AdminIndex() {
   const { posts, isError: postsError, isLoading: postsLoading } = useMyPosts();
   const { user, isError: userError, isLoading: userLoading } = useMe();
-  const data = useMemo(
-    () =>
-      posts.map((post) => ({
-        id: post.id,
-        title: post.title,
-        status: post.status,
-        slug: post.slug,
-      })),
-    [posts]
-  );
-  const columns = useMemo(
-    () => [
-      {
-        Header: "Title",
-        accessor: "title",
-      },
-      {
-        Header: "Status",
-        accessor: "status",
-      },
-      {
-        Header: "Slug",
-        accessor: "slug",
-      },
-    ],
-    []
-  );
-
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data }, useSortBy);
-
   return (
     <>
       <Helmet>
@@ -62,40 +31,51 @@ export default function AdminIndex() {
       <Divider my={5} />
       <PostCreationDrawer />
       <TableContainer>
-        <Table {...getTableProps()}>
+        <Table variant={"simple"}>
           <Thead>
-            {headerGroups.map((headerGroup) => (
-              <Tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <Th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </Th>
-                ))}
-              </Tr>
-            ))}
+            <Tr>
+              <Th>Title</Th>
+              <Th>Slug</Th>
+              <Th>Status</Th>
+              <Th isNumeric>Menu</Th>
+            </Tr>
           </Thead>
-          <Tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <Tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <Td {...cell.getCellProps()}>{cell.render("Cell")}</Td>
-                  ))}
-                </Tr>
-              );
-            })}
+          <Tbody>
+            {!!posts?.length ? (
+              posts
+                ?.sort((postA, postB) => postA.publishedAt > postB.publishedAt)
+                ?.map((post) => (
+                  <Tr key={post.id}>
+                    <Td>{post.title}</Td>
+                    <Td>{post.slug}</Td>
+                    <Td>
+                      <Tag
+                        colorScheme={post.status === "DRAFT" ? "blue" : "green"}
+                      >
+                        {post.status}
+                      </Tag>
+                    </Td>
+                    <Td isNumeric>
+                      <PostMenu post={post} />
+                    </Td>
+                  </Tr>
+                ))
+            ) : (
+              <Tr>
+                <Td>No Posts Yet</Td>
+                <Td></Td>
+                <Td></Td>
+                <Td></Td>
+              </Tr>
+            )}
           </Tbody>
           <Tfoot>
-            {headerGroups.map((headerGroup) => (
-              <Tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
-                  <Th {...column.getHeaderProps()}>
-                    {column.render("Header")}
-                  </Th>
-                ))}
-              </Tr>
-            ))}
+            <Tr>
+              <Th>Title</Th>
+              <Th>Slug</Th>
+              <Th>Status</Th>
+              <Th isNumeric>Menu</Th>
+            </Tr>
           </Tfoot>
         </Table>
       </TableContainer>
