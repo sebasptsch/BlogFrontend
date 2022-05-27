@@ -324,37 +324,37 @@ export const Element = ({
       return <UnorderedList {...attributes}>{children}</UnorderedList>;
     case "heading-one":
       return (
-        <Heading as="h1" size="3xl" {...attributes}>
+        <Heading as="h1" size="3xl" {...attributes} mt={4} mb={6}>
           {children}
         </Heading>
       );
     case "heading-two":
       return (
-        <Heading as="h2" size="2xl" {...attributes}>
+        <Heading as="h2" size="2xl" {...attributes} mt={4} mb={6}>
           {children}
         </Heading>
       );
     case "heading-three":
       return (
-        <Heading as="h3" size="lg" {...attributes}>
+        <Heading as="h3" size="lg" {...attributes} mt={4} mb={6}>
           {children}
         </Heading>
       );
     case "heading-four":
       return (
-        <Heading as="h4" size="md" {...attributes}>
+        <Heading as="h4" size="md" {...attributes} mt={4} mb={6}>
           {children}
         </Heading>
       );
     case "heading-five":
       return (
-        <Heading as="h5" size="sm" {...attributes}>
+        <Heading as="h5" size="sm" {...attributes} mt={4} mb={6}>
           {children}
         </Heading>
       );
     case "heading-six":
       return (
-        <Heading as="h6" size="xs" {...attributes}>
+        <Heading as="h6" size="xs" {...attributes} mt={4} mb={6}>
           {children}
         </Heading>
       );
