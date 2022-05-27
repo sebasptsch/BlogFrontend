@@ -12,6 +12,7 @@ import {
   withReact,
 } from "slate-react";
 import { Element, Leaf, toggleMark, Toolbar } from "./RichTextComponents";
+import withHtml from "./withHtml";
 import { withImages } from "./withImages";
 import { withShortcuts } from "./withShortcuts";
 import { withTables } from "./withTables";
@@ -90,7 +91,9 @@ export const RichTextBlock: React.FC<RichTextBlockProps & Props> = ({
   const editor: BaseEditor & ReactEditor = useMemo(
     () =>
       withImages(
-        withTables(withShortcuts(withHistory(withReact(createEditor()))))
+        withHtml(
+          withTables(withShortcuts(withHistory(withReact(createEditor()))))
+        )
       ),
     []
   );
