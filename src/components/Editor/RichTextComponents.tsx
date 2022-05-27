@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   chakra,
   Heading,
   HStack,
@@ -263,9 +264,8 @@ const Image = ({ attributes, children, element }) => {
   return (
     <div {...attributes}>
       {children}
-
       <Box contentEditable={false} style={{ position: "relative" }}>
-        <ChakraImage src={element.url} borderRadius={"lg"} />
+        <ChakraImage src={element.url} maxW={"sm"} />
         <Button
           colorScheme="red"
           onMouseDown={() => Transforms.removeNodes(editor, { at: path })}
@@ -295,7 +295,11 @@ export const Element = ({
   const props = { attributes, children, element };
   switch (element.type) {
     case "image":
-      return <Image {...props} />;
+      return (
+        <Center>
+          <Image {...props} />
+        </Center>
+      );
     case "table":
       return (
         <Table>
