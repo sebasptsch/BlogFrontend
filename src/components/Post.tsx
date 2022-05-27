@@ -1,4 +1,4 @@
-import { Heading, LinkBox, Tag } from "@chakra-ui/react";
+import { Heading, LinkBox, Tag, Text } from "@chakra-ui/react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
@@ -39,8 +39,7 @@ export default function PostItem(props: { post }) {
       <Heading size="md" my={2}>
         {props.post.title}
       </Heading>
-      <p>{props.post.summary}</p>
-      By {props.post.user.name}
+      <Text>{props.post.summary}</Text>
     </LinkBox>
   );
 }
