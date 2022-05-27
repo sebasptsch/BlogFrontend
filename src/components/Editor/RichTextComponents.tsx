@@ -265,7 +265,7 @@ const Image = ({ attributes, children, element }) => {
     <div {...attributes}>
       {children}
       <Box contentEditable={false} style={{ position: "relative" }}>
-        <ChakraImage src={element.url} borderRadius={"lg"} maxWidth={"sm"} />
+        <ChakraImage src={element.url} borderRadius={"lg"} maxWidth={"md"} />
         <Button
           colorScheme="red"
           onMouseDown={() => Transforms.removeNodes(editor, { at: path })}
