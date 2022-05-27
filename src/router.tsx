@@ -8,7 +8,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-const App = React.lazy(() => import("./App"));
+import App from "./App";
 const AdminIndex = React.lazy(() => import("./screens/admin/AdminIndex"));
 const EditPost = React.lazy(() => import("./screens/admin/Edit"));
 const AuthScreen = React.lazy(() => import("./screens/auth/Auth"));
@@ -26,14 +26,7 @@ export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <React.Suspense fallback={<Spinner />}>
-              <App />
-            </React.Suspense>
-          }
-        >
+        <Route path="/" element={<App />}>
           <Route
             index
             element={
