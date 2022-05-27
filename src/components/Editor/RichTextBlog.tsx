@@ -90,8 +90,8 @@ export const RichTextBlock: React.FC<RichTextBlockProps & Props> = ({
 
   const editor: BaseEditor & ReactEditor = useMemo(
     () =>
-      withImages(
-        withHtml(
+      withHtml(
+        withImages(
           withTables(withShortcuts(withHistory(withReact(createEditor()))))
         )
       ),
