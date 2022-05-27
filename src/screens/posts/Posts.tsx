@@ -16,7 +16,9 @@ export default function Posts({ title = true }: { title?: boolean }) {
         {isLoading ? (
           <Skeleton />
         ) : (
-          posts?.map((post) => <PostItem post={post} key={post.id} />)
+          posts
+            ?.sort((a, b) => a.publishedAt < b.publishedAt)
+            .map((post) => <PostItem post={post} key={post.id} />)
         )}
       </SimpleGrid>
     </>
