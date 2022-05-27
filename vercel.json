@@ -5,6 +5,10 @@
             "destination": "https://api.sebasptsch.dev/:path*"
         },
         {
+            "source": "/sitemap.xml",
+            "destination": "https://api.sebasptsch.dev/sitemap/sitemap.xml"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
