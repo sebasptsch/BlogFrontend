@@ -13,6 +13,7 @@ import {
   Table,
   Tbody,
   Td,
+  Text,
   Tr,
   UnorderedList,
   useColorMode,
@@ -359,7 +360,11 @@ export const Element = ({
         </Heading>
       );
     default:
-      return <p {...attributes}>{children}</p>;
+      return (
+        <Text {...attributes} my={4}>
+          {children}
+        </Text>
+      );
   }
 };
 
