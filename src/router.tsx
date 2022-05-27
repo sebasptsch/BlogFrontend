@@ -29,7 +29,7 @@ export default function AppRouter() {
         <Route
           path="/"
           element={
-            <React.Suspense fallback={<>...</>}>
+            <React.Suspense fallback={<Spinner />}>
               <App />
             </React.Suspense>
           }
@@ -37,7 +37,7 @@ export default function AppRouter() {
           <Route
             index
             element={
-              <React.Suspense fallback={<>...</>}>
+              <React.Suspense fallback={<Spinner />}>
                 <HomeScreen />
               </React.Suspense>
             }
@@ -49,7 +49,7 @@ export default function AppRouter() {
                 loggedIn={loggedIn}
                 isLoading={isLoggedInLoading}
               >
-                <React.Suspense fallback={<>...</>}>
+                <React.Suspense fallback={<Spinner />}>
                   <AuthScreen />
                 </React.Suspense>
               </IsntLoggedInRoute>
@@ -58,7 +58,7 @@ export default function AppRouter() {
             <Route
               path="register"
               element={
-                <React.Suspense fallback={<>...</>}>
+                <React.Suspense fallback={<Spinner />}>
                   <Register />
                 </React.Suspense>
               }
@@ -66,7 +66,7 @@ export default function AppRouter() {
             <Route
               path="login"
               element={
-                <React.Suspense fallback={<>...</>}>
+                <React.Suspense fallback={<Spinner />}>
                   <Login />
                 </React.Suspense>
               }
@@ -74,7 +74,7 @@ export default function AppRouter() {
             <Route
               index
               element={
-                <React.Suspense fallback={<>...</>}>
+                <React.Suspense fallback={<Spinner />}>
                   <DefaultAuth />
                 </React.Suspense>
               }
@@ -84,7 +84,7 @@ export default function AppRouter() {
             path="images"
             element={
               <AdminRoute isAdmin={isAdmin} isLoading={isAdminLoading}>
-                <React.Suspense fallback={<>...</>}>
+                <React.Suspense fallback={<Spinner />}>
                   <ImagesScreen />
                 </React.Suspense>
               </AdminRoute>
@@ -94,7 +94,7 @@ export default function AppRouter() {
             path="profile"
             element={
               <ProtectedRoute loggedIn={loggedIn} isLoading={isLoggedInLoading}>
-                <React.Suspense fallback={<>...</>}>
+                <React.Suspense fallback={<Spinner />}>
                   <Me />
                 </React.Suspense>
               </ProtectedRoute>
@@ -114,7 +114,7 @@ export default function AppRouter() {
             <Route
               index
               element={
-                <React.Suspense fallback={<>...</>}>
+                <React.Suspense fallback={<Spinner />}>
                   <AdminIndex />
                 </React.Suspense>
               }
@@ -122,7 +122,7 @@ export default function AppRouter() {
             <Route
               path="edit/:id"
               element={
-                <React.Suspense fallback={<>...</>}>
+                <React.Suspense fallback={<Spinner />}>
                   <EditPost />
                 </React.Suspense>
               }
