@@ -9,16 +9,16 @@ import {
   Routes,
 } from "react-router-dom";
 import App from "./App";
-const AdminIndex = React.lazy(() => import("./screens/admin/AdminIndex"));
-const EditPost = React.lazy(() => import("./screens/admin/Edit"));
-const AuthScreen = React.lazy(() => import("./screens/auth/Auth"));
-const DefaultAuth = React.lazy(() => import("./screens/auth/DefaultAuth"));
-const Login = React.lazy(() => import("./screens/auth/Login"));
-const Register = React.lazy(() => import("./screens/auth/Register"));
-const HomeScreen = React.lazy(() => import("./screens/home/HomeScreen"));
-const ImagesScreen = React.lazy(() => import("./screens/images/ImagesScreen"));
-const PostScreen = React.lazy(() => import("./screens/posts/Post"));
-const Me = React.lazy(() => import("./screens/profile/Profile"));
+import AdminIndex from "./screens/admin/AdminIndex";
+import EditPost from "./screens/admin/Edit";
+import AuthScreen from "./screens/auth/Auth";
+import DefaultAuth from "./screens/auth/DefaultAuth";
+import Login from "./screens/auth/Login";
+import Register from "./screens/auth/Register";
+import HomeScreen from "./screens/home/HomeScreen";
+import ImagesScreen from "./screens/images/ImagesScreen";
+import PostScreen from "./screens/posts/Post";
+import Me from "./screens/profile/Profile";
 
 export default function AppRouter() {
   const { loggedIn, isLoading: isLoggedInLoading } = useLoggedIn();
@@ -27,14 +27,7 @@ export default function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route
-            index
-            element={
-              <React.Suspense fallback={<Spinner />}>
-                <HomeScreen />
-              </React.Suspense>
-            }
-          />
+          <Route index element={<HomeScreen />} />
           <Route
             path="auth"
             element={
@@ -42,44 +35,19 @@ export default function AppRouter() {
                 loggedIn={loggedIn}
                 isLoading={isLoggedInLoading}
               >
-                <React.Suspense fallback={<Spinner />}>
-                  <AuthScreen />
-                </React.Suspense>
+                <AuthScreen />
               </IsntLoggedInRoute>
             }
           >
-            <Route
-              path="register"
-              element={
-                <React.Suspense fallback={<Spinner />}>
-                  <Register />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="login"
-              element={
-                <React.Suspense fallback={<Spinner />}>
-                  <Login />
-                </React.Suspense>
-              }
-            />
-            <Route
-              index
-              element={
-                <React.Suspense fallback={<Spinner />}>
-                  <DefaultAuth />
-                </React.Suspense>
-              }
-            />
+            <Route path="register" element={<Register />} />
+            <Route path="login" element={<Login />} />
+            <Route index element={<DefaultAuth />} />
           </Route>
           <Route
             path="images"
             element={
               <AdminRoute isAdmin={isAdmin} isLoading={isAdminLoading}>
-                <React.Suspense fallback={<Spinner />}>
-                  <ImagesScreen />
-                </React.Suspense>
+                <ImagesScreen />
               </AdminRoute>
             }
           />
@@ -87,9 +55,7 @@ export default function AppRouter() {
             path="profile"
             element={
               <ProtectedRoute loggedIn={loggedIn} isLoading={isLoggedInLoading}>
-                <React.Suspense fallback={<Spinner />}>
-                  <Me />
-                </React.Suspense>
+                <Me />
               </ProtectedRoute>
             }
           />
@@ -104,22 +70,8 @@ export default function AppRouter() {
               </AdminRoute>
             }
           >
-            <Route
-              index
-              element={
-                <React.Suspense fallback={<Spinner />}>
-                  <AdminIndex />
-                </React.Suspense>
-              }
-            />
-            <Route
-              path="edit/:id"
-              element={
-                <React.Suspense fallback={<Spinner />}>
-                  <EditPost />
-                </React.Suspense>
-              }
-            />
+            <Route index element={<AdminIndex />} />
+            <Route path="edit/:id" element={<EditPost />} />
           </Route>
         </Route>
       </Routes>
