@@ -1,9 +1,9 @@
 import useSWR from "swr";
 import { fetcher } from "@utils";
+import { ImageDto } from "../generated";
 
 export function useImage(id: number) {
-  const { data, error } = useSWR(`/images/${id}`);
-
+  const { data, error } = useSWR<ImageDto, any>(`/images/${id}`);
   return {
     image: data,
     isLoading: !error && !data,

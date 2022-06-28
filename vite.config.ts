@@ -10,7 +10,7 @@ export default defineConfig({
     port: 3002,
     proxy: {
       "/api": {
-        target: "http://localhost:3030",
+        target: "https://api.sebasptsch.dev",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

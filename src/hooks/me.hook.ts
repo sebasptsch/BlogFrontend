@@ -1,7 +1,8 @@
 import useSWR from "swr";
+import { UserDto } from "../generated";
 
 export function useMe() {
-  const { data, error } = useSWR(`/users/me`);
+  const { data, error } = useSWR<UserDto>(`/users/me`);
 
   return {
     user: data,

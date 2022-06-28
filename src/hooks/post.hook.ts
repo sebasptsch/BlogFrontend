@@ -1,7 +1,8 @@
 import useSWR from "swr";
+import { GetPostWithUserDto } from "../generated";
 
 export function usePostSlug(slug) {
-  const { data, error } = useSWR(`/posts/slug/${slug}`);
+  const { data, error } = useSWR<GetPostWithUserDto>(`/posts/slug/${slug}`);
 
   return {
     post: data,
@@ -11,7 +12,7 @@ export function usePostSlug(slug) {
 }
 
 export function usePostId(id: number) {
-  const { data, error } = useSWR(`/posts/${id}`);
+  const { data, error } = useSWR<GetPostWithUserDto>(`/posts/${id}`);
 
   return {
     post: data,

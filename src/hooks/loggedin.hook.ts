@@ -1,8 +1,9 @@
 import useSWR from "swr";
 import { fetcher } from "@utils";
+import { LoggedInDto } from "../generated";
 
 export function useLoggedIn() {
-  const { data, error } = useSWR(`/auth/loggedIn`, fetcher);
+  const { data, error } = useSWR<LoggedInDto>(`/auth/loggedIn`, fetcher);
 
   return {
     loggedIn: data?.loggedIn,
