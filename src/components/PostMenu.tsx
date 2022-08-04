@@ -10,9 +10,10 @@ import {
 import { api } from "@utils";
 import { Link } from "react-router-dom";
 import { useSWRConfig } from "swr";
+import { MinimalPostDto } from "../generated";
 
 interface Props {
-  post: Post;
+  post: MinimalPostDto;
 }
 
 type Status = "PUBLISHED" | "DRAFT";

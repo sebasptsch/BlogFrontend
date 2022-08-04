@@ -22,6 +22,11 @@ import { useSWRConfig } from "swr";
 import { RichTextBlock } from "./Editor/RichTextBlog";
 export default function PostCreationDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  interface FormData {
+    title: string;
+    summary: string;
+    content: any;
+  }
   const {
     register,
     handleSubmit,
@@ -29,7 +34,7 @@ export default function PostCreationDrawer() {
     reset,
     control,
     formState: { errors, isSubmitting, touchedFields },
-  } = useForm();
+  } = useForm<FormData>();
   const { mutate } = useSWRConfig();
   const navigate = useNavigate();
   const alert = useAlert();

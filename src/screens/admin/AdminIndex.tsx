@@ -43,7 +43,11 @@ export default function AdminIndex() {
           <Tbody>
             {!!posts?.length ? (
               posts
-                ?.sort((a, b) => a.publishedAt < b.publishedAt)
+                ?.sort(
+                  (a, b) =>
+                    new Date(b.publishedAt).getTime() -
+                    new Date(a.publishedAt).getTime()
+                )
                 .map((post) => (
                   <Tr key={post.id}>
                     <Td>{post.title}</Td>

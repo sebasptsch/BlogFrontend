@@ -63,30 +63,6 @@ export default function Me() {
                 </StatNumber>
               </Stat>
             </StatGroup>
-            <StatGroup>
-              <Stat>
-                <StatLabel>
-                  {user.accounts.length === 1 ? "Provider" : "Providers"}
-                </StatLabel>
-                <StatNumber>
-                  {user.accounts.map((account) => account.provider).join()}
-                </StatNumber>
-              </Stat>
-              <Stat>
-                <StatLabel>Role</StatLabel>
-                <StatNumber>{user.role}</StatNumber>
-              </Stat>
-            </StatGroup>
-            <StatGroup>
-              <Stat>
-                <StatLabel>Images</StatLabel>
-                <StatNumber>{user._count.images}</StatNumber>
-              </Stat>
-              <Stat>
-                <StatLabel>Posts</StatLabel>
-                <StatNumber>{user._count.posts}</StatNumber>
-              </Stat>
-            </StatGroup>
           </Container>
 
           <ButtonGroup>
