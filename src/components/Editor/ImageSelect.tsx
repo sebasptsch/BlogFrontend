@@ -24,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 import isUrl from "is-url";
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useImages } from "../../hooks/images.hook";
 import { uploadImage } from "../../utils/requests";
 import FileUpload from "./FileUpload";
@@ -58,7 +58,9 @@ export const selectImage = () =>
 
 const ChooseUploadedImage = ({ callback }: { callback: Props["callback"] }) => {
   const { images, isLoading } = useImages();
-
+  interface UploadedImageForm {
+    existingFile: number;
+  }
   const {
     setValue,
     register,
@@ -68,8 +70,8 @@ const ChooseUploadedImage = ({ callback }: { callback: Props["callback"] }) => {
     watch,
     reset,
     formState: { errors },
-  } = useForm();
-  const onSubmit = (data: { existingFile: string }) =>
+  } = useForm<UploadedImageForm>();
+  const onSubmit: SubmitHandler<UploadedImageForm> = (data) =>
     new Promise<any>((resolve, reject) => {
       reset();
       callback(`/api/images/${data.existingFile}`);
@@ -77,7 +79,7 @@ const ChooseUploadedImage = ({ callback }: { callback: Props["callback"] }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="selectForm">
-      <FormControl isInvalid={errors.existingFile} isRequired>
+      <FormControl isInvalid={!!errors.existingFile} isRequired>
         <FormLabel>{"Select an existing image"}</FormLabel>
         <Controller
           rules={{ required: "Please select an image" }}
@@ -118,6 +120,10 @@ const ChooseUploadedImage = ({ callback }: { callback: Props["callback"] }) => {
 };
 
 const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
+  interface UploadImageForm {
+    file: File;
+    name: string;
+  }
   const {
     setValue,
     register,
@@ -127,9 +133,9 @@ const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
     reset,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<UploadImageForm>();
 
-  const onSubmit = (data: { file: File; name: string }) =>
+  const onSubmit: SubmitHandler<UploadImageForm> = (data) =>
     new Promise<void>((resolve, reject) => {
       // callback(data.image);
       uploadImage(data.file, data.name).then((response: { id: number }) => {
@@ -142,12 +148,12 @@ const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} id="uploadForm">
-      <FormControl isInvalid={errors.name} isRequired>
+      <FormControl isInvalid={!!errors.name} isRequired>
         <FormLabel htmlFor="uploadName">{"Provide a nickname"}</FormLabel>
         <Input id="uploadName" {...register("name", { required: true })} />
         <FormErrorMessage> </FormErrorMessage>
       </FormControl>
-      <FileUpload
+      <FileUpload<UploadImageForm>
         placeholder={undefined}
         acceptedFileTypes={"image/*"}
         control={control}
@@ -176,6 +182,10 @@ const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
 };
 
 const EnterUrl = ({ callback }: { callback: Props["callback"] }) => {
+  interface EnterUrlForm {
+    url: string;
+  }
+
   const {
     setValue,
     register,
@@ -185,7 +195,7 @@ const EnterUrl = ({ callback }: { callback: Props["callback"] }) => {
     watch,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<EnterUrlForm>();
 
   const onSubmit = (data) =>
     new Promise<void>((resolve, reject) => {
@@ -214,7 +224,7 @@ const EnterUrl = ({ callback }: { callback: Props["callback"] }) => {
         <Input id="uploadName" {...register("name", { required: true })} />
         <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
       </FormControl> */}
-      <FormControl isRequired isInvalid={errors.url}>
+      <FormControl isRequired isInvalid={!!errors.url}>
         <FormLabel htmlFor="url">{"Provide a url"}</FormLabel>
         <Input
           id="url"

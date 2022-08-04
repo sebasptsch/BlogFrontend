@@ -17,11 +17,11 @@ import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import React from "react";
 import { useAlert } from "react-alert";
 import { Helmet } from "react-helmet";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useSWRConfig } from "swr";
 import { RichTextBlock } from "../../components/Editor/RichTextBlog";
-import { PostsService } from "../../generated";
+import { EditPostDto, PostsService } from "../../generated";
 
 const InitialPost: React.FC = () => {
   let { id } = useParams();
@@ -44,7 +44,7 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
     content: post.content.content,
     status: post.status,
     slug: post.slug,
-    publishedAt: new Date(post.publishedAt),
+    publishedAt: post.publishedAt,
   };
   //   console.log(post.status);
   const {
@@ -54,16 +54,15 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
     reset,
     control,
     formState: { errors, isSubmitting, touchedFields, isDirty },
-  } = useForm({ defaultValues });
+  } = useForm<EditPostDto>({ defaultValues });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { mutate } = useSWRConfig();
   const alert = useAlert();
-  const onSubmit = (data: { content: any; publishedAt: Date }) =>
+  const onSubmit: SubmitHandler<EditPostDto> = (data) =>
     new Promise((resolve, reject) => {
       PostsService.editPostById(post.id, {
         ...data,
         content: { content: data.content },
-        publishedAt: data.publishedAt.toISOString(),
       })
 
         .then(({ title, summary, content, status, slug, publishedAt }) => {
@@ -74,7 +73,7 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
             content: content.content,
             status,
             slug,
-            publishedAt: new Date(publishedAt),
+            publishedAt,
           });
           mutate(`/posts/${post.id}`);
           mutate(`/posts/slug/${post.slug}`);
@@ -142,8 +141,8 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
               <FormLabel htmlFor="publishedAt">Published At</FormLabel>
 
               <SingleDatepicker
-                onDateChange={onChange}
-                date={value}
+                onDateChange={(date) => onChange(date.toISOString())}
+                date={new Date(value)}
                 id="publishedAt"
               />
               <FormHelperText>Enter a Publish Date here</FormHelperText>

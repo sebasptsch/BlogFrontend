@@ -14,31 +14,37 @@ import {
   Input,
   useDisclosure,
 } from "@chakra-ui/react";
+import kebabCase from "lodash/kebabCase";
+import { useEffect } from "react";
 import { useAlert } from "react-alert";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
 import { PostsService } from "../generated";
 import { RichTextBlock } from "./Editor/RichTextBlog";
+
 export default function PostCreationDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   interface FormData {
     title: string;
     summary: string;
     content: any;
+    slug: string;
+    publishedAt: string;
   }
   const {
     register,
     handleSubmit,
     watch,
     reset,
+    setValue,
     control,
     formState: { errors, isSubmitting, touchedFields },
   } = useForm<FormData>();
   const { mutate } = useSWRConfig();
   const navigate = useNavigate();
   const alert = useAlert();
-  const onSubmit = (data) =>
+  const onSubmit: SubmitHandler<FormData> = (data) =>
     new Promise((resolve, reject) => {
       PostsService.createPost({
         ...data,
@@ -56,6 +62,12 @@ export default function PostCreationDrawer() {
           reject(reason);
         });
     });
+  const title = watch("title");
+  useEffect(() => {
+    if (!touchedFields.slug) {
+      setValue("slug", kebabCase(title));
+    }
+  }, [title]);
 
   return (
     <>
@@ -80,6 +92,24 @@ export default function PostCreationDrawer() {
                   id="title"
                   type="text"
                   {...register("title", { required: true })}
+                />
+                <FormHelperText>Enter a title here</FormHelperText>
+                <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl
+                isRequired
+                isInvalid={errors.slug && touchedFields.slug}
+              >
+                <FormLabel htmlFor="slug">Slug</FormLabel>
+                <Input
+                  id="slug"
+                  type="text"
+                  {...register("slug", {
+                    required: true,
+                    validate: (v) =>
+                      !!v.match(/^[a-z0-9]+(?:[-/][a-z0-9]+)*$/) ??
+                      "Needs to be a valid slug.",
+                  })}
                 />
                 <FormHelperText>Enter a title here</FormHelperText>
                 <FormErrorMessage>{errors.title?.message}</FormErrorMessage>

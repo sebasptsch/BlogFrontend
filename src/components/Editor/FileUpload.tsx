@@ -8,20 +8,20 @@ import {
   InputLeftElement,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import { Control, useController, Validate } from "react-hook-form";
+import { Control, FieldValues, useController, Validate } from "react-hook-form";
 import { MdImage } from "react-icons/md";
 
 interface FileUploadProps {
   name: string;
   placeholder?: string;
   acceptedFileTypes?: string;
-  control: Control;
+  control: Control<any, any>;
   label: string;
   isRequired?: boolean;
   validate: Validate<any> | Record<string, Validate<any>>;
 }
 
-const FileUpload = ({
+const FileUpload = <T extends FieldValues>({
   name,
   placeholder,
   acceptedFileTypes,
@@ -31,17 +31,17 @@ const FileUpload = ({
   validate,
 }: FileUploadProps) => {
   const inputRef = useRef<HTMLInputElement>();
+
   const {
     field: { ref, value, onChange, ...inputProps },
-    fieldState: { invalid, isTouched, isDirty },
-  } = useController({
+    fieldState: { isTouched, isDirty, error },
+  } = useController<any, any>({
     name,
-    control,
     rules: { required: isRequired, validate },
   });
 
   return (
-    <FormControl isInvalid={invalid} isRequired>
+    <FormControl isInvalid={!!error} isRequired>
       <FormLabel htmlFor="writeUpFile">{label}</FormLabel>
       <InputGroup>
         <InputLeftElement
@@ -67,7 +67,7 @@ const FileUpload = ({
           readOnly
         />
       </InputGroup>
-      <FormErrorMessage>{invalid}</FormErrorMessage>
+      <FormErrorMessage>{error.message}</FormErrorMessage>
     </FormControl>
   );
 };

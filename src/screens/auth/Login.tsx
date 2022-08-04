@@ -14,21 +14,28 @@ import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import { GoogleReCaptcha } from "react-google-recaptcha-v3";
 import { Helmet } from "react-helmet";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
 
 export default function Login() {
+  interface LoginForm {
+    username: string;
+    password: string;
+    captchaToken: string;
+  }
+
   const {
     handleSubmit,
     register,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm({});
+  } = useForm<LoginForm>({});
   const navigate = useNavigate();
   const alert = useAlert();
   const { mutate } = useSWRConfig();
-  const onSubmit = (values: any) => login(mutate, values, alert);
+  const onSubmit: SubmitHandler<LoginForm> = (values) =>
+    login(mutate, values, alert);
   const onVerifyCaptcha = (token) => {
     setValue("captchaToken", token);
   };
@@ -49,7 +56,7 @@ export default function Login() {
         </Heading>
         <Divider my={5} />
         <Container>
-          <FormControl isInvalid={errors.username}>
+          <FormControl isInvalid={!!errors.username}>
             <FormLabel htmlFor="username">Username</FormLabel>
             <Input
               id="username"
@@ -63,7 +70,7 @@ export default function Login() {
             </FormErrorMessage>
           </FormControl>
 
-          <FormControl isInvalid={errors.password}>
+          <FormControl isInvalid={!!errors.password}>
             <FormLabel htmlFor="password">Password</FormLabel>
             <Input
               id="password"

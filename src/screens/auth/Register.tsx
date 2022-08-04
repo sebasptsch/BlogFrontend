@@ -13,27 +13,29 @@ import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import { GoogleReCaptcha } from "react-google-recaptcha-v3";
 import { Helmet } from "react-helmet";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
 import { AuthenticationService } from "../../generated";
 
 export default function Register() {
+  interface RegisterForm {
+    username: string;
+    password: string;
+    passwordconfirm: string;
+    captchaToken: string;
+  }
   const {
     handleSubmit,
     register,
     setValue,
     getValues,
     formState: { errors, isSubmitting },
-  } = useForm();
-  interface FormValues {
-    username: string;
-    password: string;
-  }
+  } = useForm<RegisterForm>();
   const alert = useAlert();
   const navigate = useNavigate();
   const { mutate } = useSWRConfig();
-  const onSubmit = (values: any) =>
+  const onSubmit: SubmitHandler<RegisterForm> = (values) =>
     new Promise((resolve, reject) => {
       AuthenticationService.register(values)
         .then((data) => {
@@ -69,7 +71,7 @@ export default function Register() {
       </Heading>
       <Divider my={5} />
       <Container>
-        <FormControl isInvalid={errors.username}>
+        <FormControl isInvalid={!!errors.username}>
           <FormLabel htmlFor="username">Username</FormLabel>
           <Input
             id="username"
@@ -83,7 +85,7 @@ export default function Register() {
           </FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={errors.password}>
+        <FormControl isInvalid={!!errors.password}>
           <FormLabel htmlFor="password">Password</FormLabel>
           <Input
             id="password"
@@ -96,7 +98,7 @@ export default function Register() {
             {errors.password && errors.password.message}
           </FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={errors.passwordconfirm}>
+        <FormControl isInvalid={!!errors.passwordconfirm}>
           <FormLabel htmlFor="password">Confirm Password</FormLabel>
           <Input
             id="password"
@@ -108,7 +110,7 @@ export default function Register() {
             })}
           />
           <FormErrorMessage>
-            {errors.passwordconfirm && errors.passwordconfirm.message}
+            {!!errors.passwordconfirm && errors.passwordconfirm.message}
           </FormErrorMessage>
         </FormControl>
         <GoogleReCaptcha onVerify={onVerifyCaptcha} />
