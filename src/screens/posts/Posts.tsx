@@ -17,7 +17,11 @@ export default function Posts({ title = true }: { title?: boolean }) {
           <Skeleton />
         ) : (
           posts
-            ?.sort((a, b) => a.publishedAt < b.publishedAt)
+            ?.sort(
+              (a, b) =>
+                new Date(b.publishedAt).getTime() -
+                new Date(a.publishedAt).getTime()
+            )
             .map((post) => <PostItem post={post} key={post.id} />)
         )}
       </SimpleGrid>
