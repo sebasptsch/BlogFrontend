@@ -30,7 +30,6 @@ export default function PostCreationDrawer() {
     summary: string;
     content: any;
     slug: string;
-    publishedAt: string;
   }
   const {
     register,
@@ -48,6 +47,7 @@ export default function PostCreationDrawer() {
     new Promise((resolve, reject) => {
       PostsService.createPost({
         ...data,
+        publishedAt: new Date().toISOString(),
         content: { content: data.content },
       })
 
