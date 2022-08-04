@@ -1,7 +1,7 @@
 import { Box, ButtonGroup, IconButton, Image } from "@chakra-ui/react";
-import { api } from "@utils";
 import { FaTrash } from "react-icons/fa";
 import { useSWRConfig } from "swr";
+import { ImagesService } from "../generated";
 export default function ImageComponent(props: {
   image: {
     id: number;
@@ -12,7 +12,7 @@ export default function ImageComponent(props: {
   const { mutate } = useSWRConfig();
   // const { isError, isLoading, image} = useImage(props.id)
   const deleteImg = () => {
-    api.delete(`/images/${props.image.id}`).then(() => mutate("/images"));
+    ImagesService.deleteImage(props.image.id).then(() => mutate("/images"));
   };
   // console.log(props.image);
   return (

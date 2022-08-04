@@ -1,6 +1,10 @@
 import { AlertContainer } from "react-alert";
 import { ScopedMutator } from "swr/dist/types";
-import { api } from "./api";
+import {
+  AuthenticationService,
+  ImagesService,
+  UsersService,
+} from "../generated";
 
 interface LoginData {
   password: string;
@@ -8,7 +12,7 @@ interface LoginData {
 }
 
 export const logout = (mutate: ScopedMutator<any>) => {
-  api.post("/auth/logout").then(() => {
+  AuthenticationService.logout().then(() => {
     mutate("/users/me");
     mutate("/auth/loggedIn");
     mutate("/auth/isAdmin");
@@ -21,8 +25,7 @@ export const login = async (
   alert: AlertContainer
 ) =>
   new Promise<void>((resolve, reject) => {
-    api
-      .post("/auth/signin", data)
+    AuthenticationService.signin(data)
       .then((result) => {
         mutate("/users/me");
         mutate("/auth/loggedIn");
@@ -30,15 +33,8 @@ export const login = async (
         mutate("/posts");
         resolve();
       })
-      .catch((error) => {
-        if (error?.response?.data?.message) {
-          alert.info(error.response.data.message);
-        } else if (error.request) {
-          // No Response
-        } else {
-          console.log("Error", error.message);
-        }
-        reject();
+      .catch((response) => {
+        reject(response);
       });
   });
 
@@ -47,21 +43,13 @@ export const deleteAccount = async (
   alert: AlertContainer
 ) =>
   new Promise<void>((resolve, reject) => {
-    api
-      .delete("/users/me")
+    UsersService.deleteUser()
       .then(() => {
         logout(mutate);
         resolve();
       })
       .catch((error) => {
-        if (error?.response?.data?.message) {
-          alert.info(error.response.data.message);
-        } else if (error.request) {
-          // No Response
-        } else {
-          console.log("Error", error.message);
-        }
-        reject();
+        reject(error);
       });
   });
 
@@ -71,39 +59,25 @@ export const deleteImage = async (
   alert: AlertContainer
 ) =>
   new Promise<void>((resolve, reject) => {
-    api
-      .delete(`/images/${imageId}`)
+    ImagesService.deleteImage(imageId)
       .then(() => {
         mutate("/images");
         mutate(`/images/${imageId}`);
         resolve();
       })
       .catch((error) => {
-        if (error?.response?.data?.message) {
-          alert.info(error.response.data.message);
-        } else if (error.request) {
-          // No Response
-        } else {
-          console.log("Error", error.message);
-        }
-        reject();
+        reject(error);
       });
   });
 
 export const uploadImage = (image: File, name?: string) =>
   new Promise((resolve, reject) => {
-    api
-      .post(
-        "/images",
-        { file: image, name: name ?? image.name },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+    ImagesService.addImage({
+      file: image,
+      name: name ?? image.name,
+    })
       .then((result) => {
-        resolve(result.data);
+        resolve(result);
       })
       .catch(reject);
   });

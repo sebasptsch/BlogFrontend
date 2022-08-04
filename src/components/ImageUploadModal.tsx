@@ -15,11 +15,11 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { api } from "@utils";
 import { ReactNode, useRef } from "react";
 import { useAlert } from "react-alert";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
 import { useSWRConfig } from "swr";
+import { ImagesService } from "../generated";
 
 type FileUploadProps = {
   register: UseFormRegisterReturn;
@@ -79,22 +79,10 @@ export default function ImageUploadModal() {
       const file = data.file_;
       const name = data.name;
       // console.log(data);
-      api
-        .post(
-          "/images",
-          { file, name },
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
+      ImagesService.addImage({ file, name })
         .then((response) => {
           onClose();
-          alert.success(
-            `Success, image uploaded with an id of ${response.data.id}`
-          );
+          alert.success(`Success, image uploaded with an id of ${response.id}`);
           mutate("/images");
           reset();
           resolve(response);

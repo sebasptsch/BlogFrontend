@@ -13,7 +13,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { usePostId } from "@hooks";
-import { api } from "@utils";
 import { SingleDatepicker } from "chakra-dayzed-datepicker";
 import React from "react";
 import { useAlert } from "react-alert";
@@ -22,6 +21,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useSWRConfig } from "swr";
 import { RichTextBlock } from "../../components/Editor/RichTextBlog";
+import { PostsService } from "../../generated";
 
 const InitialPost: React.FC = () => {
   let { id } = useParams();
@@ -60,14 +60,14 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
   const alert = useAlert();
   const onSubmit = (data: { content: any; publishedAt: Date }) =>
     new Promise((resolve, reject) => {
-      api
-        .patch(`/posts/${post.id}`, {
-          ...data,
-          content: { content: data.content },
-          publishedAt: data.publishedAt.toISOString(),
-        })
-        .then(({ data }) => {
-          const { title, summary, content, status, slug, publishedAt } = data;
+      PostsService.editPostById(post.id, {
+        ...data,
+        content: { content: data.content },
+        publishedAt: data.publishedAt.toISOString(),
+      })
+
+        .then(({ title, summary, content, status, slug, publishedAt }) => {
+          // const {  } = data;
           reset({
             title,
             summary,
@@ -82,7 +82,7 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
           resolve(data);
         })
         .catch((reason) => {
-          alert.error(reason?.response?.data?.message);
+          // alert.error(reason?.response?.data?.message);
           reject(reason);
         });
     });

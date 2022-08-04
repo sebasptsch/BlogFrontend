@@ -9,7 +9,6 @@ import {
   Heading,
   Input,
 } from "@chakra-ui/react";
-import { api } from "@utils";
 import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import { GoogleReCaptcha } from "react-google-recaptcha-v3";
@@ -17,6 +16,7 @@ import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
+import { AuthenticationService } from "../../generated";
 
 export default function Register() {
   const {
@@ -35,14 +35,13 @@ export default function Register() {
   const { mutate } = useSWRConfig();
   const onSubmit = (values: any) =>
     new Promise((resolve, reject) => {
-      api
-        .post("/auth/register", values)
-        .then((result) => {
+      AuthenticationService.register(values)
+        .then((data) => {
           alert.success("Successfully logged in!");
           mutate("/auth/loggedIn");
           navigate("/profile");
 
-          resolve(result.data.access_token);
+          resolve(data.access_token);
         })
         .catch((result) => {
           // console.log(result);

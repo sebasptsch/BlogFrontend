@@ -18,3 +18,9 @@ export type { LoggedInDto } from './models/LoggedInDto';
 export { MinimalPostDto } from './models/MinimalPostDto';
 export type { MinimalUserDto } from './models/MinimalUserDto';
 export { UserDto } from './models/UserDto';
+
+export { AuthenticationService } from './services/AuthenticationService';
+export { ImagesService } from './services/ImagesService';
+export { PostsService } from './services/PostsService';
+export { RootService } from './services/RootService';
+export { UsersService } from './services/UsersService';

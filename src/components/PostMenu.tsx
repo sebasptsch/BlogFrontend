@@ -7,10 +7,9 @@ import {
   MenuList,
   MenuProps,
 } from "@chakra-ui/react";
-import { api } from "@utils";
 import { Link } from "react-router-dom";
 import { useSWRConfig } from "swr";
-import { MinimalPostDto } from "../generated";
+import { EditPostDto, MinimalPostDto, PostsService } from "../generated";
 
 interface Props {
   post: MinimalPostDto;
@@ -44,19 +43,18 @@ const PostMenu: React.FC<Omit<MenuProps, "children"> & Props> = ({
           onClick={() => {
             if (post.status === "PUBLISHED") {
               // Make Draft
-              api.patch(`/posts/${post.id}`, { status: "DRAFT" }).then(() => {
+              PostsService.editPostById(post.id, {
+                status: EditPostDto.status.DRAFT,
+              }).then(() => {
                 mutate("/posts/me");
               });
             } else if (post.status === "DRAFT") {
               // Publish
-              api
-                .patch(`/posts/${post.id}`, {
-                  status: "PUBLISHED",
-                  publishedAt: new Date().toISOString(),
-                })
-                .then(() => {
-                  mutate("/posts/me");
-                });
+              PostsService.editPostById(post.id, {
+                status: EditPostDto.status.PUBLISHED,
+              }).then(() => {
+                mutate("/posts/me");
+              });
             }
           }}
         >
@@ -64,7 +62,7 @@ const PostMenu: React.FC<Omit<MenuProps, "children"> & Props> = ({
         </MenuItem>
         <MenuItem
           onClick={() => {
-            api.delete(`/posts/${post.id}`).then(() => {
+            PostsService.deletePostById(post.id).then(() => {
               mutate("/posts/me");
             });
           }}
