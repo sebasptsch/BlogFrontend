@@ -28,7 +28,7 @@ interface Post {
   status: Status;
 }
 
-const PostMenu: React.FC<Omit<MenuProps, "children"> & Props> = ({
+export const PostMenu: React.FC<Omit<MenuProps, "children"> & Props> = ({
   post,
   ...rest
 }: Props & Omit<MenuProps, "children">) => {
@@ -78,5 +78,3 @@ const PostMenu: React.FC<Omit<MenuProps, "children"> & Props> = ({
     </Menu>
   );
 };
-
-export default PostMenu;

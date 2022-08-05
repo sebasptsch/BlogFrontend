@@ -1,6 +1,7 @@
 import { Heading, LinkBox, Tag, Text } from "@chakra-ui/react";
 import { DateTime } from "luxon";
 import { Link } from "react-router-dom";
+import { MinimalPostDto } from "../generated";
 
 // interface Post {
 //   id: number;
@@ -15,7 +16,9 @@ import { Link } from "react-router-dom";
 //   publishedAt: string;
 // }
 
-export default function PostItem(props: { post }) {
+export const PostItem: React.FC<{ post: MinimalPostDto }> = (props: {
+  post;
+}) => {
   return (
     <LinkBox
       as={Link}
@@ -35,4 +38,4 @@ export default function PostItem(props: { post }) {
       <Text>{props.post.summary}</Text>
     </LinkBox>
   );
-}
+};

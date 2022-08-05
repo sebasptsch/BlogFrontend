@@ -21,7 +21,7 @@ interface FileUploadProps {
   validate: Validate<any> | Record<string, Validate<any>>;
 }
 
-const FileUpload = <T extends FieldValues>({
+export const FileUpload = <T extends FieldValues>({
   name,
   placeholder,
   acceptedFileTypes,
@@ -71,5 +71,3 @@ const FileUpload = <T extends FieldValues>({
     </FormControl>
   );
 };
-
-export default FileUpload;

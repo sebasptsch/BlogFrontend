@@ -18,7 +18,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
 
-export default function Login() {
+const Login: React.FC = () => {
   interface LoginForm {
     username: string;
     password: string;
@@ -98,4 +98,5 @@ export default function Login() {
       </form>
     </>
   );
-}
+};
+export default Login;

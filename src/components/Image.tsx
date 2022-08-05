@@ -2,13 +2,14 @@ import { Box, ButtonGroup, IconButton, Image } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 import { useSWRConfig } from "swr";
 import { ImagesService } from "../generated";
-export default function ImageComponent(props: {
+
+export const ImageComponent: React.FC<{
   image: {
     id: number;
     userId: number;
   };
   boxSize?: string;
-}) {
+}> = (props) => {
   const { mutate } = useSWRConfig();
   // const { isError, isLoading, image} = useImage(props.id)
   const deleteImg = () => {
@@ -46,4 +47,4 @@ export default function ImageComponent(props: {
       </Box>
     </Box>
   );
-}
+};

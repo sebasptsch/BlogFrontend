@@ -20,7 +20,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
 import Logo from "../logo.svg";
 
-export default function Nav() {
+export const Nav: React.FC = () => {
   const { loggedIn } = useLoggedIn();
   const { isAdmin } = useIsAdmin();
   const navigate = useNavigate();
@@ -104,4 +104,4 @@ export default function Nav() {
       </Flex>
     </Container>
   );
-}
+};

@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
 import { AuthenticationService } from "../../generated";
 
-export default function Register() {
+const Register: React.FC = () => {
   interface RegisterForm {
     username: string;
     password: string;
@@ -127,4 +127,5 @@ export default function Register() {
       </Container>
     </form>
   );
-}
+};
+export default Register;

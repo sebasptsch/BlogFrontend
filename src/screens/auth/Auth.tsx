@@ -4,7 +4,7 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
 import { mutate } from "swr";
-export default function AuthScreen() {
+const AuthScreen = () => {
   return (
     <GoogleReCaptchaProvider
       reCaptchaKey="6Lf6ne4fAAAAAD7JmLtcYowY6XjCLTL38HKSY9Rb"
@@ -37,4 +37,5 @@ export default function AuthScreen() {
       </Center>
     </GoogleReCaptchaProvider>
   );
-}
+};
+export default AuthScreen;

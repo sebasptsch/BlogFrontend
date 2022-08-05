@@ -17,7 +17,7 @@ interface Props {
   content: Descendant[];
 }
 
-const RichTextRenderer: React.FC<Props> = ({ content }: Props) => {
+export const RichTextRenderer: React.FC<Props> = ({ content }: Props) => {
   const editor = useMemo(
     () =>
       withHtml(
@@ -43,5 +43,3 @@ const RichTextRenderer: React.FC<Props> = ({ content }: Props) => {
     </Slate>
   );
 };
-
-export default RichTextRenderer;

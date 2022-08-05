@@ -1,6 +1,5 @@
 import { Spinner } from "@chakra-ui/react";
 import { useIsAdmin, useLoggedIn } from "@hooks";
-import React from "react";
 import {
   BrowserRouter,
   Navigate,
@@ -9,16 +8,19 @@ import {
   Routes,
 } from "react-router-dom";
 import App from "./App";
-import AdminIndex from "./screens/admin/AdminIndex";
-import EditPost from "./screens/admin/Edit";
-import AuthScreen from "./screens/auth/Auth";
-import DefaultAuth from "./screens/auth/DefaultAuth";
-import Login from "./screens/auth/Login";
-import Register from "./screens/auth/Register";
-import HomeScreen from "./screens/home/HomeScreen";
-import ImagesScreen from "./screens/images/ImagesScreen";
-import PostScreen from "./screens/posts/Post";
-import Me from "./screens/profile/Profile";
+import {
+  AdminIndex,
+  AuthScreen,
+  DefaultAuth,
+  Edit as EditPost,
+  HomeScreen,
+  ImagesScreen,
+  Login,
+  PostScreen,
+  Profile,
+  Register,
+} from "./screens";
+// import AuthScreen from "./screens/auth/Auth";
 
 export default function AppRouter() {
   const { loggedIn, isLoading: isLoggedInLoading } = useLoggedIn();
@@ -55,7 +57,7 @@ export default function AppRouter() {
             path="profile"
             element={
               <ProtectedRoute loggedIn={loggedIn} isLoading={isLoggedInLoading}>
-                <Me />
+                <Profile />
               </ProtectedRoute>
             }
           />

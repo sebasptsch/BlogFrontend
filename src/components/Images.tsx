@@ -1,8 +1,8 @@
 import { Box, Grid, GridItem } from "@chakra-ui/react";
 import { useImages } from "@hooks";
-import ImageComponent from "./Image";
+import { ImageComponent } from "./Image";
 
-export default function Images() {
+export const Images: React.FC = () => {
   const { isError, isLoading, images } = useImages();
   return (
     <>
@@ -17,4 +17,4 @@ export default function Images() {
       </Box>
     </>
   );
-}
+};

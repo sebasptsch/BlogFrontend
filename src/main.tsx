@@ -5,7 +5,7 @@ import { positions, Provider as AlertProvider } from "react-alert";
 import ReactDOM from "react-dom/client";
 import { Helmet } from "react-helmet";
 import { SWRConfig } from "swr";
-import { ChakraAlert } from "./components/Alert";
+import { ChakraAlert } from "./components";
 import AppRouter from "./router";
 import { helmetOptions } from "./utils/helmetOptions";
 ReactDOM.createRoot(document.getElementById("root")!).render(

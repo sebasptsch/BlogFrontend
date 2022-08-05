@@ -14,10 +14,10 @@ import { useImages } from "@hooks";
 import { useAlert } from "react-alert";
 import { Helmet } from "react-helmet";
 import { useSWRConfig } from "swr";
-import ImageUploadModal from "../../components/ImageUploadModal";
+import { ImageUploadModal } from "../../components";
 import { deleteImage } from "../../utils/requests";
 
-export default function ImagesScreen() {
+const ImagesScreen = () => {
   const { images, isLoading, isError } = useImages();
   const { mutate } = useSWRConfig();
   const alert = useAlert();
@@ -46,7 +46,7 @@ export default function ImagesScreen() {
       </SimpleGrid>
     </>
   );
-}
+};
 
 const ImageBox = (data: {
   image: { id: number; mutate; alert; name: string };
@@ -84,3 +84,4 @@ const ImageBox = (data: {
     </Box>
   );
 };
+export default ImagesScreen;

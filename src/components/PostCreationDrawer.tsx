@@ -23,7 +23,7 @@ import { useSWRConfig } from "swr";
 import { PostsService } from "../generated";
 import { RichTextBlock } from "./Editor/RichTextBlog";
 
-export default function PostCreationDrawer() {
+export const PostCreationDrawer: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   interface FormData {
     title: string;
@@ -149,7 +149,7 @@ export default function PostCreationDrawer() {
       </Drawer>
     </>
   );
-}
+};
 
 const initialValue = [
   {

@@ -12,7 +12,7 @@ import { FaGithub, FaTwitter } from "react-icons/fa";
 import { MdAnalytics } from "react-icons/md";
 import Logo from "../logo.svg";
 
-export default function Footer() {
+export const Footer: React.FC = () => {
   return (
     <Container
       as="footer"
@@ -52,4 +52,4 @@ export default function Footer() {
       </Stack>
     </Container>
   );
-}
+};

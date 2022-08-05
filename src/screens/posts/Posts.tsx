@@ -1,8 +1,8 @@
 import { Divider, Heading, SimpleGrid, Skeleton } from "@chakra-ui/react";
-import PostItem from "../../components/Post";
+import { PostItem } from "../../components";
 import { usePosts } from "../../hooks/posts.hook";
 
-export default function Posts({ title = true }: { title?: boolean }) {
+const Posts: React.FC<{ title?: boolean }> = ({ title = true }) => {
   const { posts, isLoading, isError } = usePosts();
   return (
     <>
@@ -27,4 +27,5 @@ export default function Posts({ title = true }: { title?: boolean }) {
       </SimpleGrid>
     </>
   );
-}
+};
+export default Posts;

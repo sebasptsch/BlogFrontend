@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-export default function DefaultAuth() {
+const DefaultAuth: React.FC = () => {
   return (
     <>
       <Helmet>
@@ -39,4 +39,5 @@ export default function DefaultAuth() {
       </Center>
     </>
   );
-}
+};
+export default DefaultAuth;

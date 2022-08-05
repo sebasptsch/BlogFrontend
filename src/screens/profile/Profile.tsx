@@ -17,7 +17,7 @@ import { Helmet } from "react-helmet";
 import { useSWRConfig } from "swr";
 import { deleteAccount } from "../../utils/requests";
 
-export default function Me() {
+const Me: React.FC = () => {
   const { isLoading, isError, user } = useMe();
   const { mutate } = useSWRConfig();
   const alert = useAlert();
@@ -67,4 +67,5 @@ export default function Me() {
       {/* <Images /> */}
     </>
   );
-}
+};
+export default Me;

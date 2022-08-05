@@ -20,7 +20,7 @@ import { Helmet } from "react-helmet";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useSWRConfig } from "swr";
-import { RichTextBlock } from "../../components/Editor/RichTextBlog";
+import { RichTextBlock } from "../../components";
 import { EditPostDto, PostsService } from "../../generated";
 
 const InitialPost: React.FC = () => {

@@ -2,9 +2,9 @@ import { Container, Divider, Heading, Skeleton } from "@chakra-ui/react";
 import { usePostSlug } from "@hooks";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
-import RichTextRenderer from "../../components/Editor/RichTextRenderer";
+import { RichTextRenderer } from "../../components";
 
-export default function PostScreen() {
+const PostScreen: React.FC = () => {
   let { slug } = useParams();
   const { isLoading, isError, post } = usePostSlug(slug);
   if (isLoading) {
@@ -27,4 +27,5 @@ export default function PostScreen() {
       </>
     );
   }
-}
+};
+export default PostScreen;

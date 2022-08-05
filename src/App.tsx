@@ -1,7 +1,6 @@
 import { Container, Flex, Spacer } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
-import Footer from "./components/Footer";
-import Nav from "./components/Nav";
+import { Footer, Nav } from "./components";
 
 function App() {
   return (

@@ -1,7 +1,7 @@
 import { Heading, Stack, Text } from "@chakra-ui/react";
 import Posts from "../posts/Posts";
 
-export default function HomeScreen() {
+const HomeScreen = () => {
   return (
     <>
       <Stack textAlign={"center"}>
@@ -15,4 +15,5 @@ export default function HomeScreen() {
       <Posts title={false} />
     </>
   );
-}
+};
+export default HomeScreen;

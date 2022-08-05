@@ -13,10 +13,9 @@ import {
 } from "@chakra-ui/react";
 import { useMe, useMyPosts } from "@hooks";
 import { Helmet } from "react-helmet";
-import PostCreationDrawer from "../../components/PostCreationDrawer";
-import PostMenu from "../../components/PostMenu";
+import { PostCreationDrawer, PostMenu } from "../../components";
 
-export default function AdminIndex() {
+const AdminIndex = () => {
   const { posts, isError: postsError, isLoading: postsLoading } = useMyPosts();
   const { user, isError: userError, isLoading: userLoading } = useMe();
   return (
@@ -85,4 +84,5 @@ export default function AdminIndex() {
       </TableContainer>
     </>
   );
-}
+};
+export default AdminIndex;

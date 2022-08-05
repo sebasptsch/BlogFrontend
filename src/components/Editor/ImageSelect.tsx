@@ -27,7 +27,7 @@ import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useImages } from "../../hooks/images.hook";
 import { uploadImage } from "../../utils/requests";
-import FileUpload from "./FileUpload";
+import { FileUpload } from "./FileUpload";
 
 interface Props {
   isOpen: boolean;
@@ -56,7 +56,11 @@ export const selectImage = () =>
     );
   });
 
-const ChooseUploadedImage = ({ callback }: { callback: Props["callback"] }) => {
+export const ChooseUploadedImage = ({
+  callback,
+}: {
+  callback: Props["callback"];
+}) => {
   const { images, isLoading } = useImages();
   interface UploadedImageForm {
     existingFile: number;
@@ -119,7 +123,7 @@ const ChooseUploadedImage = ({ callback }: { callback: Props["callback"] }) => {
   );
 };
 
-const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
+export const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
   interface UploadImageForm {
     file: File;
     name: string;
@@ -181,7 +185,7 @@ const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
   );
 };
 
-const EnterUrl = ({ callback }: { callback: Props["callback"] }) => {
+export const EnterUrl = ({ callback }: { callback: Props["callback"] }) => {
   interface EnterUrlForm {
     url: string;
   }
@@ -248,12 +252,12 @@ const EnterUrl = ({ callback }: { callback: Props["callback"] }) => {
   );
 };
 
-export function ImageSelect({
+export const ImageSelect: React.FC<Props> = ({
   isOpen,
   onOpen,
   onClose,
   callback: selectCallback,
-}: Props) {
+}) => {
   const callback = (imageUrl: string) => {
     selectCallback(imageUrl);
     onClose();
@@ -296,7 +300,7 @@ export function ImageSelect({
       </ModalContent>
     </Modal>
   );
-}
+};
 
 interface ImageBoxProps {
   image: {
@@ -306,7 +310,7 @@ interface ImageBoxProps {
   selected: boolean;
 }
 
-const ImageBox = (props: ImageBoxProps) => {
+export const ImageBox = (props: ImageBoxProps) => {
   return (
     <Box
       borderWidth={"3px"}
