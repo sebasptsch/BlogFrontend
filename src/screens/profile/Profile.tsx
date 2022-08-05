@@ -11,7 +11,7 @@ import {
   StatNumber,
 } from "@chakra-ui/react";
 import { useMe } from "@hooks";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { useAlert } from "react-alert";
 import { Helmet } from "react-helmet";
 import { useSWRConfig } from "swr";
@@ -38,28 +38,14 @@ export default function Me() {
               <Stat>
                 <StatLabel>Account Created</StatLabel>
                 <StatNumber>
-                  {moment(user.createdAt).calendar(null, {
-                    lastDay: "[Yesterday]",
-                    sameDay: "[Today]",
-                    nextDay: "[Tomorrow]",
-                    lastWeek: "[last] dddd",
-                    nextWeek: "dddd",
-                    sameElse: "L",
-                  })}
+                  {DateTime.fromISO(user.createdAt).toRelativeCalendar()}
                 </StatNumber>
               </Stat>
 
               <Stat>
                 <StatLabel>Account Last Updated</StatLabel>
                 <StatNumber>
-                  {moment(user.updatedAt).calendar(null, {
-                    lastDay: "[Yesterday]",
-                    sameDay: "[Today]",
-                    nextDay: "[Tomorrow]",
-                    lastWeek: "[last] dddd",
-                    nextWeek: "dddd",
-                    sameElse: "L",
-                  })}
+                  {DateTime.fromISO(user.updatedAt).toRelativeCalendar()}
                 </StatNumber>
               </Stat>
             </StatGroup>

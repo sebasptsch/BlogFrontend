@@ -1,5 +1,5 @@
 import { Heading, LinkBox, Tag, Text } from "@chakra-ui/react";
-import moment from "moment";
+import { DateTime } from "luxon";
 import { Link } from "react-router-dom";
 
 // interface Post {
@@ -25,14 +25,7 @@ export default function PostItem(props: { post }) {
       p={5}
       to={`/posts/${props.post.slug}`}
     >
-      {moment(props.post.publishedAt).calendar(null, {
-        lastDay: "[Yesterday]",
-        sameDay: "[Today]",
-        nextDay: "[Tomorrow]",
-        lastWeek: "[last] dddd",
-        nextWeek: "dddd",
-        sameElse: "L",
-      })}
+      {DateTime.fromISO(props.post.publishedAt).toRelativeCalendar()}
       {props.post.status === "PUBLISHED" ? null : (
         <Tag>{props.post.status}</Tag>
       )}

@@ -22,7 +22,7 @@
     "image-extensions": "^1.1.0",
     "is-url": "^1.2.4",
     "lodash": "^4.17.21",
-    "moment": "^2.29.3",
+    "luxon": "^3.0.1",
     "prettier-plugin-organize-imports": "^2.3.4",
     "react": "^18.0.0",
     "react-alert": "^7.0.3",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.182",
-    "@types/moment": "^2.13.0",
+    "@types/luxon": "^3.0.0",
     "@types/react": "^18.0.0",
     "@types/react-alert": "^7.0.2",
     "@types/react-dom": "^18.0.0",
