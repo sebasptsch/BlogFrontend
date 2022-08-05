@@ -50,6 +50,7 @@ export default defineConfig({
       },
     }),
   ],
+  publicDir: "public",
   server: {
     port: 3002,
     proxy: {
