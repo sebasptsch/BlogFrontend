@@ -1,15 +1,12 @@
 import {
-  Button,
   ButtonGroup,
   Container,
-  Icon,
   IconButton,
   Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { FaGithub, FaTwitter } from "react-icons/fa";
-import { MdAnalytics } from "react-icons/md";
 import Logo from "../logo.svg";
 
 export const Footer: React.FC = () => {
@@ -36,13 +33,6 @@ export const Footer: React.FC = () => {
               aria-label="Twitter"
               icon={<FaTwitter fontSize="1.25rem" />}
             />
-            <Button
-              as="a"
-              href="https://analytics.sebasptsch.dev/share/1GCS7qiy/sebasptsch.dev"
-              leftIcon={<Icon as={MdAnalytics} w={6} h={6} />}
-            >
-              Analytics
-            </Button>
           </ButtonGroup>
         </Stack>
         <Text fontSize="sm" color="subtle">
