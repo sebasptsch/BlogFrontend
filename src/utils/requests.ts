@@ -1,10 +1,6 @@
 import { AlertContainer } from "react-alert";
 import { ScopedMutator } from "swr/dist/types";
-import {
-  AuthenticationService,
-  ImagesService,
-  UsersService,
-} from "../generated";
+import { api } from "../api";
 
 interface LoginData {
   password: string;
@@ -12,7 +8,7 @@ interface LoginData {
 }
 
 export const logout = (mutate: ScopedMutator<any>) => {
-  AuthenticationService.logout().then(() => {
+  api.authentication.logout().then(() => {
     mutate("/users/me");
     mutate("/auth/loggedIn");
     mutate("/auth/isAdmin");
@@ -25,7 +21,8 @@ export const login = async (
   alert: AlertContainer
 ) =>
   new Promise<void>((resolve, reject) => {
-    AuthenticationService.signin(data)
+    api.authentication
+      .signin(data)
       .then((result) => {
         mutate("/users/me");
         mutate("/auth/loggedIn");
@@ -43,7 +40,8 @@ export const deleteAccount = async (
   alert: AlertContainer
 ) =>
   new Promise<void>((resolve, reject) => {
-    UsersService.deleteUser()
+    api.users
+      .deleteUser()
       .then(() => {
         logout(mutate);
         resolve();
@@ -59,7 +57,8 @@ export const deleteImage = async (
   alert: AlertContainer
 ) =>
   new Promise<void>((resolve, reject) => {
-    ImagesService.deleteImage(imageId)
+    api.images
+      .deleteImage(imageId)
       .then(() => {
         mutate("/images");
         mutate(`/images/${imageId}`);
@@ -72,10 +71,11 @@ export const deleteImage = async (
 
 export const uploadImage = (image: File, name?: string) =>
   new Promise((resolve, reject) => {
-    ImagesService.addImage({
-      file: image,
-      name: name ?? image.name,
-    })
+    api.images
+      .addImage({
+        file: image,
+        name: name ?? image.name,
+      })
       .then((result) => {
         resolve(result);
       })

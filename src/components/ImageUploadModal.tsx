@@ -19,7 +19,7 @@ import { ReactNode, useRef } from "react";
 import { useAlert } from "react-alert";
 import { useForm, UseFormRegisterReturn } from "react-hook-form";
 import { useSWRConfig } from "swr";
-import { ImagesService } from "../generated";
+import { api } from "../api";
 
 type FileUploadProps = {
   register: UseFormRegisterReturn;
@@ -79,7 +79,8 @@ export const ImageUploadModal: React.FC = () => {
       const file = data.file_;
       const name = data.name;
       // console.log(data);
-      ImagesService.addImage({ file, name })
+      api.images
+        .addImage({ file, name })
         .then((response) => {
           onClose();
           alert.success(`Success, image uploaded with an id of ${response.id}`);

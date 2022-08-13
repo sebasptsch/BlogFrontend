@@ -20,7 +20,7 @@ import { useAlert } from "react-alert";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
-import { PostsService } from "../generated";
+import { api } from "../api";
 import { RichTextBlock } from "./Editor/RichTextBlog";
 
 export const PostCreationDrawer: React.FC = () => {
@@ -45,11 +45,12 @@ export const PostCreationDrawer: React.FC = () => {
   const alert = useAlert();
   const onSubmit: SubmitHandler<FormData> = (data) =>
     new Promise((resolve, reject) => {
-      PostsService.createPost({
-        ...data,
-        publishedAt: new Date().toISOString(),
-        content: { content: data.content },
-      })
+      api.posts
+        .createPost({
+          ...data,
+          publishedAt: new Date().toISOString(),
+          content: { content: data.content },
+        })
 
         .then((result) => {
           mutate("/posts/me");

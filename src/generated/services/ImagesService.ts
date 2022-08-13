@@ -5,20 +5,21 @@ import type { ImageDto } from '../models/ImageDto';
 import type { LocalFileDto } from '../models/LocalFileDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class ImagesService {
+
+    constructor(public readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * @param formData 
      * @returns ImageDto 
      * @throws ApiError
      */
-    public static addImage(
+    public addImage(
 formData: LocalFileDto,
 ): CancelablePromise<ImageDto> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/images',
             formData: formData,
@@ -32,11 +33,11 @@ formData: LocalFileDto,
      * @returns ImageDto 
      * @throws ApiError
      */
-    public static getImages(
+    public getImages(
 cursor?: number,
 take?: number,
 ): CancelablePromise<Array<ImageDto>> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/images',
             query: {
@@ -51,10 +52,10 @@ take?: number,
      * @returns any Returns the image file itself
      * @throws ApiError
      */
-    public static getImage(
+    public getImage(
 id: number,
 ): CancelablePromise<any> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/images/{id}',
             path: {
@@ -68,10 +69,10 @@ id: number,
      * @returns ImageDto 
      * @throws ApiError
      */
-    public static deleteImage(
+    public deleteImage(
 id: number,
 ): CancelablePromise<ImageDto> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'DELETE',
             url: '/images/{id}',
             path: {

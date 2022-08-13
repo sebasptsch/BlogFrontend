@@ -8,5 +8,4 @@ export type CreatePostDto = {
     summary: string;
     content: any;
     publishedAt: string;
-    bannerSrc?: string;
 };

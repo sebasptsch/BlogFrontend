@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         position={positions.BOTTOM_RIGHT}
         timeout={2000}
       >
-        <SWRConfig value={{ fetcher: fetcher }}>
+        <SWRConfig value={{ fetcher }}>
           <AppRouter />
         </SWRConfig>
       </AlertProvider>

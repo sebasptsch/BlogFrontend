@@ -7,10 +7,11 @@ import type { GetPostWithUserDto } from '../models/GetPostWithUserDto';
 import type { MinimalPostDto } from '../models/MinimalPostDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class PostsService {
+
+    constructor(public readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * @param cursor 
@@ -18,11 +19,11 @@ export class PostsService {
      * @returns MinimalPostDto 
      * @throws ApiError
      */
-    public static getPosts(
+    public getPosts(
 cursor?: number,
 take?: number,
 ): CancelablePromise<Array<MinimalPostDto>> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/posts',
             query: {
@@ -37,10 +38,10 @@ take?: number,
      * @returns GetPostWithUserDto 
      * @throws ApiError
      */
-    public static createPost(
+    public createPost(
 requestBody: CreatePostDto,
 ): CancelablePromise<GetPostWithUserDto> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/posts',
             body: requestBody,
@@ -54,11 +55,11 @@ requestBody: CreatePostDto,
      * @returns MinimalPostDto 
      * @throws ApiError
      */
-    public static getMyPosts(
+    public getMyPosts(
 cursor?: number,
 take?: number,
 ): CancelablePromise<Array<MinimalPostDto>> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/posts/me',
             query: {
@@ -73,10 +74,10 @@ take?: number,
      * @returns GetPostWithUserDto 
      * @throws ApiError
      */
-    public static getPostById(
+    public getPostById(
 id: number,
 ): CancelablePromise<GetPostWithUserDto> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/posts/{id}',
             path: {
@@ -91,11 +92,11 @@ id: number,
      * @returns GetPostWithUserDto 
      * @throws ApiError
      */
-    public static editPostById(
+    public editPostById(
 id: number,
 requestBody: EditPostDto,
 ): CancelablePromise<GetPostWithUserDto> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'PATCH',
             url: '/posts/{id}',
             path: {
@@ -111,10 +112,10 @@ requestBody: EditPostDto,
      * @returns GetPostWithUserDto 
      * @throws ApiError
      */
-    public static deletePostById(
+    public deletePostById(
 id: number,
 ): CancelablePromise<GetPostWithUserDto> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'DELETE',
             url: '/posts/{id}',
             path: {
@@ -127,8 +128,8 @@ id: number,
      * @returns GetPostWithUserDto 
      * @throws ApiError
      */
-    public static getPostBySlug(): CancelablePromise<GetPostWithUserDto> {
-        return __request(OpenAPI, {
+    public getPostBySlug(): CancelablePromise<GetPostWithUserDto> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/posts/slug/{slug}',
         });

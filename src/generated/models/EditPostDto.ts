@@ -9,7 +9,6 @@ export type EditPostDto = {
     summary?: string;
     content?: any;
     publishedAt?: string;
-    bannerSrc?: string;
 };
 
 export namespace EditPostDto {

@@ -7,17 +7,18 @@ import type { LoggedInDto } from '../models/LoggedInDto';
 import type { UserDto } from '../models/UserDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class AuthenticationService {
+
+    constructor(public readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * @returns any 
      * @throws ApiError
      */
-    public static logout(): CancelablePromise<any> {
-        return __request(OpenAPI, {
+    public logout(): CancelablePromise<any> {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/auth/logout',
         });
@@ -29,10 +30,10 @@ export class AuthenticationService {
      * @returns any Successfully created user
      * @throws ApiError
      */
-    public static register(
+    public register(
 requestBody: AuthDto,
 ): CancelablePromise<UserDto | any> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/auth/register',
             body: requestBody,
@@ -48,10 +49,10 @@ requestBody: AuthDto,
      * @returns any 
      * @throws ApiError
      */
-    public static signin(
+    public signin(
 requestBody: AuthDto,
 ): CancelablePromise<any> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'POST',
             url: '/auth/signin',
             body: requestBody,
@@ -63,8 +64,8 @@ requestBody: AuthDto,
      * @returns LoggedInDto 
      * @throws ApiError
      */
-    public static loggedIn(): CancelablePromise<LoggedInDto> {
-        return __request(OpenAPI, {
+    public loggedIn(): CancelablePromise<LoggedInDto> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/auth/loggedIn',
         });
@@ -74,8 +75,8 @@ requestBody: AuthDto,
      * @returns IsAdminDto 
      * @throws ApiError
      */
-    public static isAdmin(): CancelablePromise<IsAdminDto> {
-        return __request(OpenAPI, {
+    public isAdmin(): CancelablePromise<IsAdminDto> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/auth/isAdmin',
         });
@@ -85,8 +86,8 @@ requestBody: AuthDto,
      * @returns any 
      * @throws ApiError
      */
-    public static githubSignIn(): CancelablePromise<any> {
-        return __request(OpenAPI, {
+    public githubSignIn(): CancelablePromise<any> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/auth/github',
         });
@@ -96,8 +97,8 @@ requestBody: AuthDto,
      * @returns any 
      * @throws ApiError
      */
-    public static githubSignInCallback(): CancelablePromise<any> {
-        return __request(OpenAPI, {
+    public githubSignInCallback(): CancelablePromise<any> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/auth/github/callback',
         });
@@ -107,8 +108,8 @@ requestBody: AuthDto,
      * @returns any 
      * @throws ApiError
      */
-    public static discordSignIn(): CancelablePromise<any> {
-        return __request(OpenAPI, {
+    public discordSignIn(): CancelablePromise<any> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/auth/discord',
         });
@@ -118,8 +119,8 @@ requestBody: AuthDto,
      * @returns any 
      * @throws ApiError
      */
-    public static discordSignInCallback(): CancelablePromise<any> {
-        return __request(OpenAPI, {
+    public discordSignInCallback(): CancelablePromise<any> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/auth/discord/callback',
         });

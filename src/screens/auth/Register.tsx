@@ -16,7 +16,7 @@ import { Helmet } from "react-helmet";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSWRConfig } from "swr";
-import { AuthenticationService } from "../../generated";
+import { api } from "../../api";
 
 const Register: React.FC = () => {
   interface RegisterForm {
@@ -37,7 +37,8 @@ const Register: React.FC = () => {
   const { mutate } = useSWRConfig();
   const onSubmit: SubmitHandler<RegisterForm> = (values) =>
     new Promise((resolve, reject) => {
-      AuthenticationService.register(values)
+      api.authentication
+        .register(values)
         .then((data) => {
           alert.success("Successfully logged in!");
           mutate("/auth/loggedIn");

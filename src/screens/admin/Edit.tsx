@@ -20,8 +20,9 @@ import { Helmet } from "react-helmet";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useSWRConfig } from "swr";
+import { api } from "../../api";
 import { RichTextBlock } from "../../components";
-import { EditPostDto, PostsService } from "../../generated";
+import { EditPostDto } from "../../generated";
 
 const InitialPost: React.FC = () => {
   let { id } = useParams();
@@ -60,10 +61,11 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
   const alert = useAlert();
   const onSubmit: SubmitHandler<EditPostDto> = (data) =>
     new Promise((resolve, reject) => {
-      PostsService.editPostById(post.id, {
-        ...data,
-        content: { content: data.content },
-      })
+      api.posts
+        .editPostById(post.id, {
+          ...data,
+          content: { content: data.content },
+        })
 
         .then(({ title, summary, content, status, slug, publishedAt }) => {
           // const {  } = data;

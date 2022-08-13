@@ -6,17 +6,18 @@ import type { MinimalUserDto } from '../models/MinimalUserDto';
 import type { UserDto } from '../models/UserDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { BaseHttpRequest } from '../core/BaseHttpRequest';
 
 export class UsersService {
+
+    constructor(public readonly httpRequest: BaseHttpRequest) {}
 
     /**
      * @returns UserDto 
      * @throws ApiError
      */
-    public static getMe(): CancelablePromise<UserDto> {
-        return __request(OpenAPI, {
+    public getMe(): CancelablePromise<UserDto> {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/users/me',
         });
@@ -26,8 +27,8 @@ export class UsersService {
      * @returns UserDto 
      * @throws ApiError
      */
-    public static deleteUser(): CancelablePromise<UserDto> {
-        return __request(OpenAPI, {
+    public deleteUser(): CancelablePromise<UserDto> {
+        return this.httpRequest.request({
             method: 'DELETE',
             url: '/users/me',
         });
@@ -38,10 +39,10 @@ export class UsersService {
      * @returns MinimalUserDto 
      * @throws ApiError
      */
-    public static getUser(
+    public getUser(
 id: number,
 ): CancelablePromise<MinimalUserDto> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'GET',
             url: '/users/{id}',
             path: {
@@ -55,10 +56,10 @@ id: number,
      * @returns UserDto 
      * @throws ApiError
      */
-    public static editUser(
+    public editUser(
 requestBody: EditUserDto,
 ): CancelablePromise<UserDto> {
-        return __request(OpenAPI, {
+        return this.httpRequest.request({
             method: 'PATCH',
             url: '/users',
             body: requestBody,
