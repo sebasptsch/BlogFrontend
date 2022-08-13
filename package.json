@@ -9,7 +9,6 @@
     "generate": "rimraf src/generated && openapi -i https://api.sebasptsch.dev/api-json -o src/generated --exportServices true --exportCore true -c axios --name ApiClient"
   },
   "dependencies": {
-    "@chakra-ui/collapse": "^1.0.0-next.3",
     "@chakra-ui/icons": "^2.0.0",
     "@chakra-ui/react": "^2.0.0",
     "@emotion/react": "^11",
