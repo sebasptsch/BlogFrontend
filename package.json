@@ -32,7 +32,7 @@
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.31.1",
     "react-icons": "^4.3.1",
-    "react-router-dom": "^6.3.0",
+    "react-router-dom": "^6.4.0-pre.12",
     "react-table": "^7.8.0",
     "slate": "^0.78.0",
     "slate-history": "^0.66.0",
