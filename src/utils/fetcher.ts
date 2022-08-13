@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const api = axios.create({ baseURL: "https://api.sebasptsch.dev" });
+const api = axios.create({
+  baseURL: "https://api.sebasptsch.dev",
+  withCredentials: true,
+});
 
 export const fetcher = (data) =>
   api(data)
