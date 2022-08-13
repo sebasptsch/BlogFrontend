@@ -1,9 +1,7 @@
 import { Button, ButtonGroup, Center, Divider } from "@chakra-ui/react";
-import { createOAuthWindow } from "@utils";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
-import { mutate } from "swr";
 const AuthScreen = () => {
   return (
     <GoogleReCaptchaProvider
@@ -22,24 +20,16 @@ const AuthScreen = () => {
           <Button
             leftIcon={<FaGithub />}
             className="umami--click--githublogin-button"
-            onClick={() =>
-              createOAuthWindow(
-                "https://api.sebasptsch.dev/auth/github",
-                mutate
-              )
-            }
+            as="a"
+            href="https://api.sebasptsch.dev/auth/github"
           >
             Github
           </Button>
           <Button
             leftIcon={<FaDiscord />}
+            as="a"
             className="umami--click--discordlogin-button"
-            onClick={() =>
-              createOAuthWindow(
-                "https://api.sebasptsch.dev/auth/discord",
-                mutate
-              )
-            }
+            href="https://api.sebasptsch.dev/auth/discord"
           >
             Discord
           </Button>
