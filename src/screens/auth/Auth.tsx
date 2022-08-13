@@ -22,14 +22,24 @@ const AuthScreen = () => {
           <Button
             leftIcon={<FaGithub />}
             className="umami--click--githublogin-button"
-            onClick={() => createOAuthWindow("/api/auth/github", mutate)}
+            onClick={() =>
+              createOAuthWindow(
+                "https://api.sebasptsch.dev/auth/github",
+                mutate
+              )
+            }
           >
             Github
           </Button>
           <Button
             leftIcon={<FaDiscord />}
             className="umami--click--discordlogin-button"
-            onClick={() => createOAuthWindow("/api/auth/discord", mutate)}
+            onClick={() =>
+              createOAuthWindow(
+                "https://api.sebasptsch.dev/auth/discord",
+                mutate
+              )
+            }
           >
             Discord
           </Button>
