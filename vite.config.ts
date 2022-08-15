@@ -14,10 +14,7 @@ export default defineConfig({
     visualizer(),
     VitePWA({
       registerType: "autoUpdate",
-      workbox: {
-        navigateFallbackDenylist: [/^\/api/],
-        cleanupOutdatedCaches: true,
-      },
+      injectRegister: null,
       manifest: {
         name: "Seb's Blog",
         short_name: "Seb's Blog",
