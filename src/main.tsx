@@ -7,6 +7,7 @@ import {
   LoadableAlertProvider,
   LoadableColorModeScript,
   LoadableSWRConfig,
+  SWToast,
 } from "./components";
 import { helmetOptions } from "./utils/helmetOptions";
 
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Helmet {...helmetOptions} />
     <LoadableColorModeScript />
+
     <ChakraProvider>
+      <SWToast />
       <LoadableAlertProvider>
         <LoadableSWRConfig>
           <AppRouter />
