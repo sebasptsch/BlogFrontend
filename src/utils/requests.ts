@@ -60,8 +60,8 @@ export const deleteImage = async (
     api.images
       .deleteImage(imageId)
       .then(() => {
-        mutate("/images");
-        mutate(`/images/${imageId}`);
+        mutate("https://api.sebasptsch.dev/images");
+        mutate(`https://api.sebasptsch.dev/images/${imageId}`);
         resolve();
       })
       .catch((error) => {

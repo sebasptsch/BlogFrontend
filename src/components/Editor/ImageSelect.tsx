@@ -74,7 +74,7 @@ const ChooseUploadedImage = ({ callback }: { callback: Props["callback"] }) => {
   const onSubmit: SubmitHandler<UploadedImageForm> = (data) =>
     new Promise<any>((resolve, reject) => {
       reset();
-      callback(`/api/images/${data.existingFile}`);
+      callback(`https://api.sebasptsch.dev/images/${data.existingFile}`);
     });
 
   return (
@@ -141,7 +141,7 @@ const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
       uploadImage(data.file, data.name).then((response: { id: number }) => {
         // callback(response.id);
         reset();
-        callback(`/api/images/${response.id}`);
+        callback(`https://api.sebasptsch.dev/images/${response.id}`);
         resolve();
       });
     });
@@ -319,7 +319,7 @@ const ImageBox = (props: ImageBoxProps) => {
         key={props.image.id}
         onClick={() => props.onClick(props.image.id)}
         // borderRadius="lg"
-        src={`/api/images/${props.image.id}`}
+        src={`https://api.sebasptsch.dev/images/${props.image.id}`}
       />
     </Box>
   );

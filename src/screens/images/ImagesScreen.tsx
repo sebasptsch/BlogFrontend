@@ -60,7 +60,7 @@ const ImageBox = (data: {
       borderRadius="lg"
     >
       <img
-        src={`/api/images/${data.image.id}`}
+        src={`https://api.sebasptsch.dev/images/${data.image.id}`}
         alt={data.image.id.toString()}
         style={{ height: "auto", objectFit: "fill" }}
       />

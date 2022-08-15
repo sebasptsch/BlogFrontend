@@ -25,7 +25,7 @@ const ImageComponent: React.FC<{
       borderRadius="lg"
     >
       <Image
-        src={`/api/images/${props.image.id}`}
+        src={`https://api.sebasptsch.dev/images/${props.image.id}`}
         // boxSize={props.boxSize ?? "100px"}
         // objectFit={"cover"}
       />
