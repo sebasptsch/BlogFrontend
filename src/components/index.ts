@@ -15,3 +15,11 @@ export const PostCreationDrawer = loadable(
   () => import("./PostCreationDrawer")
 );
 export const PostMenu = loadable(() => import("./PostMenu"));
+export const LoadableAlertProvider = loadable(
+  () => import("./LoadableAlertProvider")
+);
+export const ChakraProvider = loadable(() => import("./ChakraProvider"));
+export const LoadableColorModeScript = loadable(
+  () => import("./LoadableColorModeScript")
+);
+export const LoadableSWRConfig = loadable(() => import("./LoadableSWRConfig"));

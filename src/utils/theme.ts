@@ -1,4 +1,5 @@
 import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
+import loadable from "@loadable/component";
 
 const config: ThemeConfig = {
   useSystemColorMode: true,
