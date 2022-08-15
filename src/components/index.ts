@@ -23,3 +23,4 @@ export const LoadableColorModeScript = loadable(
   () => import("./LoadableColorModeScript")
 );
 export const LoadableSWRConfig = loadable(() => import("./LoadableSWRConfig"));
+export const SWToast = loadable(() => import("./SWToast"));
