@@ -39,3 +39,4 @@ export const PostItem: React.FC<{ post: MinimalPostDto }> = (props: {
     </LinkBox>
   );
 };
+export default PostItem;

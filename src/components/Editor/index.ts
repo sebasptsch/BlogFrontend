@@ -1,9 +1,6 @@
-export * from "./FileUpload";
-export * from "./ImageSelect";
-export * from "./RichTextBlog";
-export * from "./RichTextComponents";
-export * from "./RichTextRenderer";
-export * from "./withHtml";
-export * from "./withImages";
-export * from "./withShortcuts";
-export * from "./withTables";
+import loadable from "@loadable/component";
+
+export const FileUpload = loadable(() => import("./FileUpload"));
+export const ImageSelect = loadable(() => import("./ImageSelect"));
+export const RichTextBlog = loadable(() => import("./RichTextBlog"));
+export const RichTextRenderer = loadable(() => import("./RichTextRenderer"));

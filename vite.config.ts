@@ -12,7 +12,6 @@ export default defineConfig({
     tsconfigPaths(),
     VitePWA({
       registerType: "autoUpdate",
-      injectRegister: "auto",
       workbox: {
         navigateFallbackDenylist: [/^\/api/],
         cleanupOutdatedCaches: true,
@@ -51,14 +50,4 @@ export default defineConfig({
     }),
   ],
   publicDir: "public",
-  server: {
-    port: 3002,
-    proxy: {
-      "/api": {
-        target: "https://api.sebasptsch.dev",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
-  },
 });

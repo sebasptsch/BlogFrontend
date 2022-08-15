@@ -43,3 +43,5 @@ export const RichTextRenderer: React.FC<Props> = ({ content }: Props) => {
     </Slate>
   );
 };
+
+export default RichTextRenderer;

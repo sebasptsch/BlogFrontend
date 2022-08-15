@@ -146,3 +146,4 @@ export const RichTextBlock: React.FC<RichTextBlockProps & Props> = ({
     </Box>
   );
 };
+export default RichTextBlock;

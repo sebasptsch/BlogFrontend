@@ -21,7 +21,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useSWRConfig } from "swr";
 import { api } from "../../api";
-import { RichTextBlock } from "../../components";
+import { RichTextBlog } from "../../components";
 import { EditPostDto } from "../../generated";
 
 const InitialPost: React.FC = () => {
@@ -169,7 +169,7 @@ const EditPost: React.FC<Props> = ({ post }: Props) => {
         </FormControl>
         <Controller
           render={({ field: { value, onChange } }) => (
-            <RichTextBlock value={value} onChange={onChange} />
+            <RichTextBlog value={value} onChange={onChange} />
           )}
           control={control}
           name="content"

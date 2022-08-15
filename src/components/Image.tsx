@@ -3,7 +3,7 @@ import { FaTrash } from "react-icons/fa";
 import { useSWRConfig } from "swr";
 import { api } from "../api";
 
-export const ImageComponent: React.FC<{
+const ImageComponent: React.FC<{
   image: {
     id: number;
     userId: number;
@@ -48,3 +48,4 @@ export const ImageComponent: React.FC<{
     </Box>
   );
 };
+export default ImageComponent;

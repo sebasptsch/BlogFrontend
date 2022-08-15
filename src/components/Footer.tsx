@@ -43,3 +43,4 @@ export const Footer: React.FC = () => {
     </Container>
   );
 };
+export default Footer;

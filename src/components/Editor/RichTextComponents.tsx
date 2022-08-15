@@ -54,7 +54,7 @@ import {
   useSlate,
   useSlateStatic,
 } from "slate-react";
-import { ImageSelect } from "./ImageSelect";
+import ImageSelect from "./ImageSelect";
 import { insertImage } from "./withImages";
 
 type EditorProps = BaseEditor & ReactEditor;

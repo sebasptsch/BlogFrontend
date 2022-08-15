@@ -27,7 +27,7 @@ import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useImages } from "../../hooks/images.hook";
 import { uploadImage } from "../../utils/requests";
-import { FileUpload } from "./FileUpload";
+import FileUpload from "./FileUpload";
 
 interface Props {
   isOpen: boolean;
@@ -36,7 +36,7 @@ interface Props {
   callback: (url: string) => void;
 }
 
-export const selectImage = () =>
+const selectImage = () =>
   new Promise<string>((resolve, reject) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     useEffect(() => {
@@ -56,11 +56,7 @@ export const selectImage = () =>
     );
   });
 
-export const ChooseUploadedImage = ({
-  callback,
-}: {
-  callback: Props["callback"];
-}) => {
+const ChooseUploadedImage = ({ callback }: { callback: Props["callback"] }) => {
   const { images, isLoading } = useImages();
   interface UploadedImageForm {
     existingFile: number;
@@ -123,7 +119,7 @@ export const ChooseUploadedImage = ({
   );
 };
 
-export const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
+const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
   interface UploadImageForm {
     file: File;
     name: string;
@@ -185,7 +181,7 @@ export const UploadImage = ({ callback }: { callback: Props["callback"] }) => {
   );
 };
 
-export const EnterUrl = ({ callback }: { callback: Props["callback"] }) => {
+const EnterUrl = ({ callback }: { callback: Props["callback"] }) => {
   interface EnterUrlForm {
     url: string;
   }
@@ -252,7 +248,7 @@ export const EnterUrl = ({ callback }: { callback: Props["callback"] }) => {
   );
 };
 
-export const ImageSelect: React.FC<Props> = ({
+const ImageSelect: React.FC<Props> = ({
   isOpen,
   onOpen,
   onClose,
@@ -310,7 +306,7 @@ interface ImageBoxProps {
   selected: boolean;
 }
 
-export const ImageBox = (props: ImageBoxProps) => {
+const ImageBox = (props: ImageBoxProps) => {
   return (
     <Box
       borderWidth={"3px"}
@@ -328,3 +324,4 @@ export const ImageBox = (props: ImageBoxProps) => {
     </Box>
   );
 };
+export default ImageSelect;

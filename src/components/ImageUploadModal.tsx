@@ -60,7 +60,7 @@ type FormValues = {
   name: string;
 };
 
-export const ImageUploadModal: React.FC = () => {
+const ImageUploadModal: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     register,
@@ -150,3 +150,4 @@ export const ImageUploadModal: React.FC = () => {
     </>
   );
 };
+export default ImageUploadModal;

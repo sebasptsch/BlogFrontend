@@ -1,6 +1,6 @@
 import { createIcon } from "@chakra-ui/react";
 
-export const IconLogo = createIcon({
+const IconLogo = createIcon({
   displayName: "IconLogo",
   viewBox: "0 0 285 285",
   path: (
@@ -25,3 +25,4 @@ export const IconLogo = createIcon({
     </>
   ),
 });
+export default IconLogo;

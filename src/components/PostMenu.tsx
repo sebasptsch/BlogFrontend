@@ -83,3 +83,4 @@ export const PostMenu: React.FC<Omit<MenuProps, "children"> & Props> = ({
     </Menu>
   );
 };
+export default PostMenu;

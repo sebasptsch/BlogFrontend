@@ -23,7 +23,7 @@ import { useSWRConfig } from "swr";
 import { api } from "../api";
 import { RichTextBlock } from "./Editor/RichTextBlog";
 
-export const PostCreationDrawer: React.FC = () => {
+const PostCreationDrawer: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   interface FormData {
     title: string;
@@ -158,3 +158,4 @@ const initialValue = [
     children: [{ text: "" }],
   },
 ];
+export default PostCreationDrawer;
