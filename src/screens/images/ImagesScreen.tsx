@@ -51,7 +51,9 @@ const ImagesScreen = () => {
 const ImageBox = (data: {
   image: { id: number; mutate; alert; name: string };
 }) => {
-  const { onCopy, hasCopied } = useClipboard(`/api/images/${data.image.id}`);
+  const { onCopy, hasCopied } = useClipboard(
+    `https://api.sebasptsch.dev/images/${data.image.id}`
+  );
   return (
     <Box
       key={data.image.id}
