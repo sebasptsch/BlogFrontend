@@ -55,7 +55,7 @@
     "rimraf": "^3.0.2",
     "rollup-plugin-visualizer": "^5.7.1",
     "typescript": "^4.6.3",
-    "vite": "^2.9.9",
+    "vite": "^2.9.13",
     "vite-plugin-env-compatible": "^1.1.1",
     "vite-plugin-svgr": "^2.1.0"
   }
